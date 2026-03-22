@@ -75,14 +75,14 @@
             right: 0;
             z-index: 1000;
             padding: 20px 0;
-            background: linear-gradient(to bottom, rgba(26, 26, 26, 0.95), transparent);
+            background: rgba(255, 255, 255, 0.98);
             transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
         }
 
         nav.scrolled {
-            background: rgba(26, 26, 26, 0.98);
             padding: 15px 0;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 30px rgba(0,0,0,0.15);
         }
 
         .nav-content {
@@ -99,15 +99,8 @@
         }
 
         .logo img {
-            height: 50px;
+            height: 55px;
             width: auto;
-        }
-
-        .logo-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--white);
         }
 
         .nav-links {
@@ -117,7 +110,7 @@
         }
 
         .nav-links a {
-            color: var(--gray-light);
+            color: var(--charcoal);
             text-decoration: none;
             font-size: 0.95rem;
             font-weight: 500;
@@ -126,7 +119,7 @@
         }
 
         .nav-links a:hover {
-            color: var(--gold);
+            color: var(--gold-dark);
         }
 
         .nav-links a::after {
@@ -146,7 +139,7 @@
 
         .nav-cta {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--charcoal) !important;
+            color: var(--white) !important;
             padding: 12px 28px;
             border-radius: 50px;
             font-weight: 600;
@@ -175,7 +168,7 @@
         .mobile-menu-btn span {
             width: 25px;
             height: 2px;
-            background: var(--white);
+            background: var(--charcoal);
             transition: all 0.3s ease;
         }
 
@@ -187,6 +180,7 @@
             padding: 120px 0 80px;
             position: relative;
             overflow: hidden;
+            background: linear-gradient(135deg, var(--off-white) 0%, var(--white) 50%, var(--off-white) 100%);
         }
 
         .hero::before {
@@ -196,8 +190,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(ellipse at 30% 20%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
-                        radial-gradient(ellipse at 70% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+            background: radial-gradient(ellipse at 20% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 70%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -214,6 +208,7 @@
             font-size: 3.8rem;
             line-height: 1.15;
             margin-bottom: 28px;
+            color: var(--charcoal);
         }
 
         .hero-text h1 span {
@@ -222,14 +217,14 @@
 
         .hero-subtitle {
             font-size: 1.3rem;
-            color: var(--gray-light);
+            color: var(--gray);
             margin-bottom: 16px;
             line-height: 1.7;
         }
 
         .hero-tagline {
             font-size: 1.1rem;
-            color: var(--gold);
+            color: var(--gold-dark);
             margin-bottom: 40px;
             font-weight: 500;
             letter-spacing: 0.5px;
@@ -243,7 +238,7 @@
 
         .btn-primary {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--charcoal);
+            color: var(--white);
             padding: 18px 40px;
             border-radius: 50px;
             font-weight: 600;
@@ -264,7 +259,7 @@
 
         .btn-secondary {
             background: transparent;
-            color: var(--white);
+            color: var(--charcoal);
             padding: 18px 40px;
             border-radius: 50px;
             font-weight: 600;
@@ -279,10 +274,10 @@
 
         .btn-secondary:hover {
             background: var(--gold);
-            color: var(--charcoal);
+            color: var(--white);
         }
 
-        /* ===== VIDEO CONTAINER WITH ANIMATED GOLD FRAME ===== */
+        /* ===== VIDEO CONTAINER WITH ABSTRACT GOLD FRAME ===== */
         .hero-video-container {
             position: relative;
             display: flex;
@@ -292,10 +287,10 @@
 
         .video-frame-wrapper {
             position: relative;
-            padding: 25px;
+            padding: 30px;
         }
 
-        /* MARCO DORADO ANIMADO - EFECTO ROTATIVO */
+        /* MARCO DORADO ABSTRACTO - MOVIMIENTO LENTO */
         .animated-frame {
             position: absolute;
             top: 0;
@@ -303,70 +298,46 @@
             right: 0;
             bottom: 0;
             border-radius: 28px;
-            background: conic-gradient(
-                from 0deg,
-                #B8960C,
-                #F4E4BA,
-                #D4AF37,
-                #B8960C,
-                #F4E4BA,
-                #D4AF37,
-                #F4E4BA,
-                #B8960C
-            );
-            animation: rotateFrame 3s linear infinite;
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(212, 175, 55, 0.6) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(244, 228, 186, 0.5) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(184, 150, 12, 0.4) 0%, transparent 60%);
+            animation: abstractMove 15s ease-in-out infinite;
             z-index: 0;
-            filter: blur(1px);
+            filter: blur(40px);
         }
 
-        .animated-frame::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 28px;
-            background: conic-gradient(
-                from 180deg,
-                #F4E4BA,
-                #D4AF37,
-                #B8960C,
-                #F4E4BA,
-                #D4AF37,
-                #B8960C,
-                #D4AF37,
-                #F4E4BA
-            );
-            animation: rotateFrame 3s linear infinite reverse;
-        }
-
-        @keyframes rotateFrame {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .frame-inner {
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            right: 6px;
-            bottom: 6px;
-            background: var(--charcoal);
-            border-radius: 22px;
-            z-index: 1;
+        @keyframes abstractMove {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.8;
+            }
+            25% {
+                transform: translate(10px, -10px) scale(1.05);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(-5px, 15px) scale(0.98);
+                opacity: 0.9;
+            }
+            75% {
+                transform: translate(-10px, -5px) scale(1.02);
+                opacity: 0.85;
+            }
         }
 
         .video-container {
             position: relative;
             width: 100%;
-            max-width: 380px;
+            max-width: 320px;
             aspect-ratio: 9/16;
-            border-radius: 18px;
+            border-radius: 32px;
             overflow: hidden;
             z-index: 2;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.6),
-                        0 0 60px rgba(212, 175, 55, 0.2);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.25),
+                        0 0 60px rgba(212, 175, 55, 0.15);
+            border: 6px solid #1a1a1a;
+            background: #1a1a1a;
         }
 
         .video-container iframe {
@@ -383,52 +354,153 @@
             transform: translate(-50%, -50%);
             width: 150%;
             height: 150%;
-            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.25) 0%, transparent 55%);
+            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.2) 0%, transparent 55%);
             pointer-events: none;
             z-index: -1;
-            animation: pulseGlow 3s ease-in-out infinite;
+            animation: pulseGlow 4s ease-in-out infinite;
         }
 
         @keyframes pulseGlow {
-            0%, 100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+            0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
         }
 
-        /* Partículas doradas decorativas */
-        .particles {
+        /* ===== WHATSAPP FLOATING BUTTON ===== */
+        .whatsapp-floating {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            text-decoration: none;
+        }
+
+        .whatsapp-btn-float {
+            position: relative;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5),
+                        0 0 40px rgba(212, 175, 55, 0.3);
+            animation: floatPulse 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.6),
+                        0 0 60px rgba(212, 175, 55, 0.4);
+        }
+
+        .whatsapp-btn-float svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        /* Luz detrás del botón */
+        .whatsapp-btn-float::before {
+            content: '';
             position: absolute;
             width: 100%;
             height: 100%;
-            pointer-events: none;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.6) 0%, transparent 70%);
+            animation: glowPulse 2s ease-in-out infinite;
             z-index: -1;
         }
 
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--gold);
-            border-radius: 50%;
-            animation: floatParticle 4s ease-in-out infinite;
+        @keyframes floatPulse {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
-        .particle:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
-        .particle:nth-child(2) { top: 30%; left: 80%; animation-delay: 0.5s; }
-        .particle:nth-child(3) { top: 60%; left: 10%; animation-delay: 1s; }
-        .particle:nth-child(4) { top: 80%; left: 70%; animation-delay: 1.5s; }
-        .particle:nth-child(5) { top: 20%; left: 60%; animation-delay: 2s; }
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1.2); }
+            50% { opacity: 1; transform: scale(1.4); }
+        }
 
-        @keyframes floatParticle {
-            0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
-            50% { transform: translateY(-20px) scale(1.5); opacity: 1; }
+        /* WhatsApp Preview Card */
+        .whatsapp-preview {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 280px;
+            background: #e5ddd5;
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(10px) scale(0.95);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .whatsapp-floating:hover .whatsapp-preview {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .whatsapp-message {
+            background: white;
+            border-radius: 8px;
+            padding: 10px 12px;
+            position: relative;
+        }
+
+        .whatsapp-message::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -8px;
+            width: 0;
+            height: 0;
+            border-right: 10px solid white;
+            border-bottom: 10px solid transparent;
+        }
+
+        .wa-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .wa-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .wa-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #128C7E;
+        }
+
+        .wa-text {
+            font-size: 0.75rem;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .wa-time {
+            font-size: 0.65rem;
+            color: #999;
+            float: right;
+            margin-top: 4px;
         }
 
         /* ===== STATS BAR ===== */
         .stats-bar {
-            background: var(--charcoal-light);
-            padding: 50px 0;
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            background: var(--white);
+            padding: 60px 0;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
         .stats-grid {
@@ -446,7 +518,7 @@
         }
 
         .stat-item p {
-            color: var(--gray-light);
+            color: var(--gray);
             font-size: 0.95rem;
             font-weight: 500;
         }
@@ -454,7 +526,7 @@
         /* ===== SERVICES SECTION ===== */
         .services {
             padding: 120px 0;
-            background: linear-gradient(180deg, var(--charcoal) 0%, var(--charcoal-light) 100%);
+            background: var(--charcoal);
         }
 
         .section-header {
@@ -465,6 +537,7 @@
         .section-header h2 {
             font-size: 3rem;
             margin-bottom: 20px;
+            color: var(--white);
         }
 
         .section-header p {
@@ -590,7 +663,7 @@
         /* ===== ABOUT SECTION ===== */
         .about {
             padding: 130px 0;
-            background: var(--charcoal);
+            background: linear-gradient(135deg, var(--off-white) 0%, var(--white) 50%, var(--off-white) 100%);
             position: relative;
             overflow: hidden;
         }
@@ -602,7 +675,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+            background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.06) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -622,42 +695,50 @@
             align-items: center;
         }
 
-        /* MARCO DORADO ANIMADO PARA LA FOTO */
+        /* MARCO DORADO PEQUEÑO Y LENTO PARA LA FOTO */
         .about-frame {
             position: absolute;
-            width: calc(100% + 20px);
-            height: calc(100% + 20px);
-            border-radius: 28px;
-            background: conic-gradient(
-                from 0deg,
-                #B8960C,
-                #F4E4BA,
-                #D4AF37,
-                #B8960C,
-                #F4E4BA,
-                #D4AF37,
-                #F4E4BA,
-                #B8960C
-            );
-            animation: rotateFrame 4s linear infinite;
-            filter: blur(2px);
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
+            border-radius: 24px;
+            background: 
+                radial-gradient(ellipse at 30% 40%, rgba(212, 175, 55, 0.5) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(244, 228, 186, 0.4) 0%, transparent 50%);
+            animation: frameMove 20s ease-in-out infinite;
+            filter: blur(30px);
+            z-index: 0;
+        }
+
+        @keyframes frameMove {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.6;
+            }
+            33% {
+                transform: translate(8px, -8px) scale(1.03);
+                opacity: 0.8;
+            }
+            66% {
+                transform: translate(-5px, 5px) scale(0.98);
+                opacity: 0.7;
+            }
         }
 
         .about-image-wrapper {
             position: relative;
             padding: 10px;
-            border-radius: 28px;
+            border-radius: 24px;
             z-index: 1;
         }
 
         .about-image {
             width: 100%;
-            max-width: 380px;
+            max-width: 340px;
             height: auto;
-            border-radius: 22px;
+            border-radius: 20px;
             object-fit: cover;
             display: block;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
         }
 
         .about-glow {
@@ -665,9 +746,9 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 160%;
-            height: 160%;
-            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.2) 0%, transparent 55%);
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.12) 0%, transparent 55%);
             pointer-events: none;
             z-index: 0;
         }
@@ -675,17 +756,18 @@
         .about-text h2 {
             font-size: 2.8rem;
             margin-bottom: 28px;
+            color: var(--charcoal);
         }
 
         .about-text .lead {
             font-size: 1.25rem;
-            color: var(--gold);
+            color: var(--gold-dark);
             margin-bottom: 28px;
             font-weight: 500;
         }
 
         .about-text p {
-            color: var(--gray-light);
+            color: var(--gray);
             margin-bottom: 24px;
             line-height: 1.9;
             font-size: 1.1rem;
@@ -707,7 +789,7 @@
         .highlight-icon {
             width: 55px;
             height: 55px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.05));
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -719,7 +801,7 @@
         .highlight-item h4 {
             font-size: 1.1rem;
             margin-bottom: 6px;
-            color: var(--white);
+            color: var(--charcoal);
         }
 
         .highlight-item p {
@@ -732,7 +814,11 @@
         /* ===== PROCESS SECTION ===== */
         .process {
             padding: 130px 0;
-            background: linear-gradient(180deg, var(--charcoal-light) 0%, var(--charcoal) 100%);
+            background: var(--charcoal);
+        }
+
+        .process .section-header h2 {
+            color: var(--white);
         }
 
         .process-grid {
@@ -790,87 +876,10 @@
             padding: 0 10px;
         }
 
-        /* ===== TESTIMONIALS ===== */
-        .testimonials {
-            padding: 130px 0;
-            background: var(--charcoal);
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 35px;
-        }
-
-        .testimonial-card {
-            background: var(--charcoal-light);
-            border: 1px solid rgba(212, 175, 55, 0.12);
-            border-radius: 24px;
-            padding: 45px;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .testimonial-card:hover {
-            border-color: rgba(212, 175, 55, 0.3);
-            transform: translateY(-5px);
-        }
-
-        .testimonial-card::before {
-            content: '"';
-            font-family: 'Playfair Display', serif;
-            font-size: 7rem;
-            color: var(--gold);
-            opacity: 0.15;
-            position: absolute;
-            top: 5px;
-            left: 25px;
-            line-height: 1;
-        }
-
-        .testimonial-text {
-            font-size: 1.1rem;
-            color: var(--gray-light);
-            line-height: 1.9;
-            margin-bottom: 28px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-        }
-
-        .author-avatar {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 1.3rem;
-            color: var(--charcoal);
-        }
-
-        .author-info h4 {
-            font-size: 1.05rem;
-            color: var(--white);
-            margin-bottom: 4px;
-        }
-
-        .author-info p {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-
         /* ===== CTA SECTION ===== */
         .cta-section {
             padding: 140px 0;
-            background: linear-gradient(135deg, var(--charcoal-light) 0%, var(--charcoal) 100%);
+            background: linear-gradient(135deg, var(--off-white) 0%, var(--white) 50%, var(--off-white) 100%);
             position: relative;
             overflow: hidden;
         }
@@ -882,7 +891,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.12) 0%, transparent 55%);
+            background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.08) 0%, transparent 55%);
             pointer-events: none;
         }
 
@@ -895,11 +904,12 @@
         .cta-content h2 {
             font-size: 3.2rem;
             margin-bottom: 24px;
+            color: var(--charcoal);
         }
 
         .cta-content p {
             font-size: 1.25rem;
-            color: var(--gray-light);
+            color: var(--gray);
             margin-bottom: 50px;
             max-width: 650px;
             margin-left: auto;
@@ -913,7 +923,7 @@
             flex-wrap: wrap;
         }
 
-        .whatsapp-btn {
+        .whatsapp-btn-green {
             background: #25D366;
             color: white;
             padding: 20px 50px;
@@ -928,7 +938,7 @@
             box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
         }
 
-        .whatsapp-btn:hover {
+        .whatsapp-btn-green:hover {
             transform: translateY(-4px);
             box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
         }
@@ -1040,14 +1050,12 @@
                 display: none;
             }
 
-            .testimonials-grid {
-                grid-template-columns: 1fr;
-                max-width: 600px;
-                margin: 0 auto;
-            }
-
             .footer-content {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .whatsapp-preview {
+                display: none;
             }
         }
 
@@ -1100,6 +1108,16 @@
                 grid-template-columns: 1fr;
                 text-align: center;
             }
+
+            .whatsapp-floating {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .whatsapp-btn-float {
+                width: 55px;
+                height: 55px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1107,35 +1125,52 @@
                 font-size: 2rem;
             }
 
-            .btn-primary, .btn-secondary, .whatsapp-btn {
+            .btn-primary, .btn-secondary, .whatsapp-btn-green {
                 padding: 16px 32px;
                 font-size: 0.95rem;
             }
 
             .video-container {
-                max-width: 280px;
+                max-width: 260px;
             }
 
             .about-image {
-                max-width: 280px;
+                max-width: 260px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/34667470862" class="whatsapp-floating">
+        <div class="whatsapp-preview">
+            <div class="whatsapp-message">
+                <div class="wa-header">
+                    <img src="https://i.ibb.co/NgLJ6FK9/perfil.jpg" alt="Toni" class="wa-avatar">
+                    <span class="wa-name">Toni Real</span>
+                </div>
+                <p class="wa-text">¡Hola! 👋 ¿En qué puedo ayudarte? Estoy aquí para transformar tu negocio con WhatsApp Business y páginas web que convierten.</p>
+                <span class="wa-time">Ahora</span>
+            </div>
+        </div>
+        <div class="whatsapp-btn-float">
+            <svg viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+        </div>
+    </a>
+
     <!-- Navigation -->
     <nav id="navbar">
         <div class="container">
             <div class="nav-content">
                 <a href="#" class="logo">
                     <img src="https://i.ibb.co/mVgrV6kW/logo.png" alt="Toni Real Logo">
-                    <span class="logo-text">Toni Real</span>
                 </a>
                 <ul class="nav-links">
                     <li><a href="#servicios">Servicios</a></li>
                     <li><a href="#sobre-mi">Sobre Mí</a></li>
                     <li><a href="#proceso">Proceso</a></li>
-                    <li><a href="#testimonios">Testimonios</a></li>
                     <li><a href="#contacto" class="nav-cta">Contactar</a></li>
                 </ul>
                 <button class="mobile-menu-btn">
@@ -1149,13 +1184,6 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="particles">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-        </div>
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
@@ -1189,7 +1217,6 @@
                     <div class="video-glow"></div>
                     <div class="video-frame-wrapper">
                         <div class="animated-frame"></div>
-                        <div class="frame-inner"></div>
                         <div class="video-container">
                             <iframe 
                                 src="https://www.canva.com/design/DAHEfTCwLMw/watch?embed" 
@@ -1296,10 +1323,10 @@
                     <h2>Hola, soy <span class="gold-text">Toni Real</span></h2>
                     <p class="lead">Consultor de Organización Empresarial & Especialista en WhatsApp Business</p>
                     <p>
-                        Llevo años ayudando a negocios de todos los sectores a transformar su comunicación y organización. Mi enfoque es simple: hago que la tecnología trabaje para ti, no al revés.
+                        Ayudo a negocios de todos los sectores a transformar su comunicación y organización. Mi enfoque es simple: hago que la tecnología trabaje para ti, no al revés.
                     </p>
                     <p>
-                        He trabajado desde clínicas dentales hasta comercios locales, y en todos los casos el resultado es el mismo: más ventas, menos caos, y un negocio que funciona como un reloj suizo.
+                        Desde clínicas dentales hasta comercios locales, mi objetivo es siempre el mismo: más ventas, menos caos, y un negocio que funciona como un reloj suizo.
                     </p>
                     <div class="about-highlights">
                         <div class="highlight-item">
@@ -1368,48 +1395,6 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonios">
-        <div class="container">
-            <div class="section-header">
-                <h2>Lo que Dicen <span class="gold-text">Mis Clientes</span></h2>
-                <p>Negocios reales con resultados reales.</p>
-            </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"Antes perdía muchos leads por no responder a tiempo. Ahora tengo un sistema que funciona 24/7. Mis ventas aumentaron un 40% en el primer mes."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">MG</div>
-                        <div class="author-info">
-                            <h4>María García</h4>
-                            <p>Clínica Dental Sonrisas</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"Toni transformó mi WhatsApp en una herramienta profesional. Antes era un caos, ahora tengo todo organizado y mis clientes reciben respuesta inmediata."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">JL</div>
-                        <div class="author-info">
-                            <h4>Juan López</h4>
-                            <p>Tienda TechPro</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"La página web que me creó conecta directamente con WhatsApp. Ahora recibo consultas calificadas directamente en mi móvil. Increíble."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">AR</div>
-                        <div class="author-info">
-                            <h4>Ana Rodríguez</h4>
-                            <p>Centro de Estética Bella</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- CTA Section -->
     <section class="cta-section" id="contacto">
         <div class="container">
@@ -1417,7 +1402,7 @@
                 <h2>¿Listo para <span class="gold-text">Transformar</span> tu Negocio?</h2>
                 <p>Da el primer paso hoy. Una conversación puede cambiar la forma en que trabajas para siempre.</p>
                 <div class="cta-buttons">
-                    <a href="https://wa.me/34667470862" class="whatsapp-btn">
+                    <a href="https://wa.me/34667470862" class="whatsapp-btn-green">
                         <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                         </svg>
@@ -1442,7 +1427,6 @@
                 <div class="footer-brand">
                     <a href="#" class="logo">
                         <img src="https://i.ibb.co/mVgrV6kW/logo.png" alt="Toni Real Logo" style="height: 50px;">
-                        <span class="logo-text">Toni Real</span>
                     </a>
                     <p>Transformando negocios a través de WhatsApp Business y páginas web que convierten. Organización empresarial con inteligencia artificial.</p>
                 </div>
@@ -1459,7 +1443,6 @@
                     <ul>
                         <li><a href="#sobre-mi">Sobre Mí</a></li>
                         <li><a href="#proceso">Proceso</a></li>
-                        <li><a href="#testimonios">Testimonios</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
