@@ -337,33 +337,19 @@
             overflow: hidden;
             box-shadow: 0 30px 60px rgba(0,0,0,0.3);
             z-index: 1;
-            background: var(--secondary);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            cursor: pointer;
         }
 
-        /* Video Poster con boton de play */
-        .video-poster {
+        .video-container video {
             width: 100%;
             height: 100%;
-            position: relative;
-            cursor: pointer;
-            border-radius: 45px;
-            overflow: hidden;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
-            text-decoration: none;
+            object-fit: cover;
             display: block;
+            background: #000;
         }
 
-        .video-poster::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(205, 168, 98, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(205, 168, 98, 0.1) 0%, transparent 50%);
-            z-index: 1;
-        }
-
-        .video-poster-content {
+        .video-play-overlay {
             position: absolute;
             inset: 0;
             display: flex;
@@ -371,10 +357,17 @@
             align-items: center;
             justify-content: center;
             gap: 20px;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
             z-index: 2;
+            transition: var(--transition);
         }
 
-        .video-poster .play-icon {
+        .video-play-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .video-play-overlay .play-btn {
             width: 90px;
             height: 90px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -382,12 +375,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 40px rgba(205, 168, 98, 0.3);
-            transition: var(--transition);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 50px rgba(205, 168, 98, 0.4);
             animation: pulsePlay 2s ease-in-out infinite;
         }
 
-        .video-poster .play-icon::after {
+        .video-play-overlay .play-btn::after {
             content: '';
             width: 0;
             height: 0;
@@ -397,80 +389,18 @@
             margin-left: 8px;
         }
 
-        @keyframes pulsePlay {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .video-poster:hover .play-icon {
-            transform: scale(1.1);
-            box-shadow: 0 12px 40px rgba(205, 168, 98, 0.5);
-        }
-
-        .video-poster-text {
+        .video-play-overlay .video-text {
             color: var(--primary);
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             text-align: center;
             letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        /* Video Player Container */
-        .video-player-container {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            border-radius: 45px;
-            overflow: hidden;
-            background: #000;
-        }
-
-        .video-player-container video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .video-player-container .play-overlay {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            background: rgba(0,0,0,0.3);
-            z-index: 1;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .video-player-container .play-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .video-player-container .play-overlay .play-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 40px rgba(205, 168, 98, 0.3);
-            transition: var(--transition);
-            animation: pulsePlay 2s ease-in-out infinite;
-        }
-
-        .video-player-container .play-overlay .play-icon::after {
-            content: '';
-            width: 0;
-            height: 0;
-            border-left: 24px solid white;
-            border-top: 14px solid transparent;
-            border-bottom: 14px solid transparent;
-            margin-left: 6px;
+        @keyframes pulsePlay {
+            0%, 100% { transform: scale(1); box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 50px rgba(205, 168, 98, 0.4); }
+            50% { transform: scale(1.08); box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 70px rgba(205, 168, 98, 0.6); }
         }
 
         /* Stats Section */
@@ -1608,17 +1538,14 @@
                 <div class="hero-image">
                     <div class="video-wrapper">
                         <div class="golden-frame"></div>
-                        <div class="video-container">
-                            <!-- Video MP4 con reproducción inline -->
-                            <div class="video-player-container">
-                                <video id="heroVideo" playsinline webkit-playsinline preload="metadata" poster="">
-                                    <source src="video-toni-real.mp4" type="video/mp4">
-                                    Tu navegador no soporta video HTML5.
-                                </video>
-                                <div class="play-overlay" id="playOverlay" onclick="playVideo()">
-                                    <div class="play-icon"></div>
-                                    <span class="video-poster-text">Toca para ver el video</span>
-                                </div>
+                        <div class="video-container" onclick="toggleVideo()">
+                            <video id="heroVideo" playsinline webkit-playsinline preload="auto">
+                                <source src="https://z-cdn-media.chatglm.cn/files/71baf600-0d4b-40d9-8a90-5d37cbce2917.mp4?auth_key=1805807449-c5cc95f9cbd840dda807f7cd6bb09527-0-f61f8fcc9f48c065678b357873571f57" type="video/mp4">
+                                Tu navegador no soporta video HTML5.
+                            </video>
+                            <div class="video-play-overlay" id="playOverlay">
+                                <div class="play-btn"></div>
+                                <span class="video-text">Toca para ver el video</span>
                             </div>
                         </div>
                     </div>
@@ -1989,30 +1916,27 @@
     <!-- JavaScript -->
     <script>
         // Video Player Functions
-        function playVideo() {
+        function toggleVideo() {
             const video = document.getElementById('heroVideo');
             const overlay = document.getElementById('playOverlay');
             
-            video.play();
-            overlay.classList.add('hidden');
+            if (video.paused) {
+                video.play();
+                overlay.classList.add('hidden');
+            } else {
+                video.pause();
+                overlay.classList.remove('hidden');
+            }
         }
 
-        // Mostrar overlay cuando el video se pausa o termina
+        // Mostrar overlay cuando el video termina
         document.addEventListener('DOMContentLoaded', function() {
             const video = document.getElementById('heroVideo');
             const overlay = document.getElementById('playOverlay');
             
-            video.addEventListener('pause', function() {
-                overlay.classList.remove('hidden');
-            });
-            
             video.addEventListener('ended', function() {
                 overlay.classList.remove('hidden');
                 video.currentTime = 0;
-            });
-
-            video.addEventListener('play', function() {
-                overlay.classList.add('hidden');
             });
         });
 
@@ -2058,14 +1982,6 @@
                 event.preventDefault();
                 sendMessage();
             }
-        }
-
-        // Play video function
-        function playVideo(thumbnail) {
-            const iframe = thumbnail.nextElementSibling;
-            iframe.src = "https://www.canva.com/design/DAHEfTCwLMw/watch?embed&autoplay=1";
-            iframe.style.display = "block";
-            thumbnail.style.display = "none";
         }
 
         // Form submission
