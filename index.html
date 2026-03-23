@@ -347,6 +347,94 @@
             display: block;
         }
 
+        /* Video Thumbnail para móvil */
+        .video-link-wrapper {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .video-placeholder-bg {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-placeholder-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(205, 168, 98, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(205, 168, 98, 0.1) 0%, transparent 50%);
+        }
+
+        .video-placeholder-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            z-index: 1;
+        }
+
+        .video-placeholder-content .play-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 40px rgba(205, 168, 98, 0.3);
+            transition: var(--transition);
+            animation: pulsePlay 2s ease-in-out infinite;
+        }
+
+        .video-placeholder-content .play-icon::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 28px solid white;
+            border-top: 16px solid transparent;
+            border-bottom: 16px solid transparent;
+            margin-left: 8px;
+        }
+
+        @keyframes pulsePlay {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .video-link-wrapper:hover .play-icon {
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px rgba(205, 168, 98, 0.5);
+        }
+
+        .video-text {
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        /* En móvil mostrar thumbnail, ocultar iframe */
+        @media (max-width: 768px) {
+            .video-container iframe {
+                display: none !important;
+            }
+            .video-link-wrapper {
+                display: block !important;
+            }
+        }
+
         /* Video Thumbnail */
         .video-thumbnail {
             position: relative;
@@ -1528,7 +1616,17 @@
                     <div class="video-wrapper">
                         <div class="golden-frame"></div>
                         <div class="video-container">
+                            <!-- Video para desktop -->
                             <iframe src="https://www.canva.com/design/DAHEfTCwLMw/watch?embed" allowfullscreen></iframe>
+                            <!-- Thumbnail para móvil -->
+                            <a href="https://www.canva.com/design/DAHEfTCwLMw/watch" target="_blank" class="video-link-wrapper">
+                                <div class="video-placeholder-bg">
+                                    <div class="video-placeholder-content">
+                                        <div class="play-icon"></div>
+                                        <span class="video-text">Toca para ver el video</span>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
