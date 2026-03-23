@@ -425,13 +425,10 @@
             letter-spacing: 0.5px;
         }
 
-        /* En móvil mostrar thumbnail, ocultar iframe */
+        /* En móvil el video se reproduce directamente */
         @media (max-width: 768px) {
-            .video-container iframe {
-                display: none !important;
-            }
             .video-link-wrapper {
-                display: block !important;
+                display: none !important;
             }
         }
 
@@ -1616,17 +1613,8 @@
                     <div class="video-wrapper">
                         <div class="golden-frame"></div>
                         <div class="video-container">
-                            <!-- Video para desktop -->
-                            <iframe src="https://www.canva.com/design/DAHEfTCwLMw/watch?embed" allowfullscreen></iframe>
-                            <!-- Thumbnail para móvil -->
-                            <a href="https://www.canva.com/design/DAHEfTCwLMw/watch" target="_blank" class="video-link-wrapper">
-                                <div class="video-placeholder-bg">
-                                    <div class="video-placeholder-content">
-                                        <div class="play-icon"></div>
-                                        <span class="video-text">Toca para ver el video</span>
-                                    </div>
-                                </div>
-                            </a>
+                            <!-- Video reproducible en desktop y móvil -->
+                            <iframe src="https://www.canva.com/design/DAHEfTCwLMw/watch?embed" allowfullscreen allow="autoplay; fullscreen"></iframe>
                         </div>
                     </div>
                 </div>
