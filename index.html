@@ -8,10 +8,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables */
         :root {
             --primary: #cda862;
             --primary-dark: #b48b3c;
+            --primary-light: #e8d5a3;
             --secondary: #1a1a1a;
             --light-bg: #faf9f6;
             --text-dark: #2b2b2b;
@@ -21,7 +21,6 @@
             --transition: all 0.3s ease;
         }
 
-        /* Reset and base styles */
         * {
             margin: 0;
             padding: 0;
@@ -69,11 +68,21 @@
             align-items: center;
             justify-content: space-between;
             height: 80px;
+            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
         }
 
         .logo-image {
             height: 56px;
             width: auto;
+            max-width: 200px;
+            object-fit: contain;
         }
 
         .nav-menu {
@@ -110,7 +119,6 @@
             width: 100%;
         }
 
-        /* Button styles */
         .btn {
             display: inline-block;
             padding: 14px 32px;
@@ -147,7 +155,6 @@
             color: var(--white);
         }
 
-        /* Mobile navigation toggle */
         .mobile-toggle {
             display: none;
             flex-direction: column;
@@ -164,7 +171,6 @@
             transition: var(--transition);
         }
 
-        /* Responsive nav */
         @media (max-width: 768px) {
             .nav-menu {
                 display: none;
@@ -184,6 +190,9 @@
                 gap: 16px;
                 box-shadow: 0 12px 24px rgba(0,0,0,0.3);
             }
+            .btn-small {
+                display: none;
+            }
         }
 
         /* Hero Section */
@@ -192,6 +201,7 @@
             padding-bottom: 80px;
             background: var(--white);
             overflow: hidden;
+            position: relative;
         }
 
         .hero-grid {
@@ -238,11 +248,110 @@
             flex-wrap: wrap;
         }
 
-        /* Video container */
+        /* Video con Marco Dorado Abstracto */
         .hero-image {
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+        }
+
+        /* MARCO DORADO ABSTRACTO - ANIMACIÓN LENTA */
+        .golden-frame {
+            position: absolute;
+            width: 380px;
+            height: 650px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .golden-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                var(--primary) 30deg,
+                var(--primary-light) 60deg,
+                transparent 90deg,
+                var(--primary-dark) 120deg,
+                var(--primary) 150deg,
+                transparent 180deg,
+                var(--primary-light) 210deg,
+                var(--primary) 240deg,
+                transparent 270deg,
+                var(--primary-dark) 300deg,
+                var(--primary-light) 330deg,
+                transparent 360deg
+            );
+            border-radius: 50px;
+            opacity: 0.4;
+            animation: rotateSlow 20s linear infinite;
+            filter: blur(2px);
+        }
+
+        .golden-frame::after {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            background: conic-gradient(
+                from 180deg,
+                var(--primary-light) 0deg,
+                transparent 45deg,
+                var(--primary) 90deg,
+                var(--primary-dark) 135deg,
+                transparent 180deg,
+                var(--primary) 225deg,
+                var(--primary-light) 270deg,
+                transparent 315deg,
+                var(--primary-dark) 360deg
+            );
+            border-radius: 45px;
+            opacity: 0.3;
+            animation: rotateSlow 25s linear infinite reverse;
+            filter: blur(3px);
+        }
+
+        .golden-ring {
+            position: absolute;
+            width: 420px;
+            height: 700px;
+            border: 3px solid transparent;
+            border-image: linear-gradient(
+                45deg,
+                var(--primary-light),
+                var(--primary),
+                var(--primary-dark),
+                var(--primary),
+                var(--primary-light)
+            ) 1;
+            border-radius: 55px;
+            animation: pulse 4s ease-in-out infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes rotateSlow {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.05);
+            }
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.02);
+            }
         }
 
         .video-container {
@@ -250,7 +359,9 @@
             width: 320px;
             border-radius: 45px;
             overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3), 0 0 60px rgba(205, 168, 98, 0.3);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            z-index: 1;
+            background: var(--secondary);
         }
 
         .video-container iframe {
@@ -613,6 +724,8 @@
         .footer-logo {
             height: 50px;
             width: auto;
+            max-width: 180px;
+            object-fit: contain;
         }
 
         .footer-social {
@@ -705,9 +818,23 @@
             .video-container iframe {
                 height: 455px;
             }
+            .golden-frame {
+                width: 300px;
+                height: 520px;
+            }
+            .golden-ring {
+                width: 340px;
+                height: 570px;
+            }
             .about-photo {
                 width: 280px;
                 height: 280px;
+            }
+            .logo-image {
+                height: 45px;
+            }
+            .footer-logo {
+                height: 40px;
             }
         }
     </style>
@@ -715,26 +842,24 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="container">
-            <div class="nav-wrapper">
-                <a href="#" class="logo-link">
-                    <img src="https://i.ibb.co/RTzmLpjj/logo.png" alt="Toni Real" class="logo-image">
-                </a>
-                <ul class="nav-menu">
-                    <li><a href="#servicios">Servicios</a></li>
-                    <li><a href="#sobre-mi">Sobre Mí</a></li>
-                    <li><a href="#proceso">Proceso</a></li>
-                    <li><a href="#contacto">Contacto</a></li>
-                </ul>
-                <a href="https://wa.me/34667470862?text=Hola%20Toni,%20me%20interesa%20saber%20más%20sobre%20tus%20servicios" class="btn btn-primary btn-small" target="_blank">
-                    📱 WhatsApp
-                </a>
-                <button class="mobile-toggle" onclick="this.classList.toggle('open')">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
+        <div class="nav-wrapper">
+            <a href="#" class="logo-link">
+                <img src="https://i.ibb.co/RTzmLpjj/logo.png" alt="Toni Real" class="logo-image">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#sobre-mi">Sobre Mí</a></li>
+                <li><a href="#proceso">Proceso</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <a href="https://wa.me/34667470862?text=Hola%20Toni,%20me%20interesa%20saber%20más%20sobre%20tus%20servicios" class="btn btn-primary btn-small" target="_blank">
+                📱 WhatsApp
+            </a>
+            <button class="mobile-toggle" onclick="this.classList.toggle('open'); document.querySelector('.nav-menu').classList.toggle('open');">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
@@ -760,6 +885,9 @@
                     </div>
                 </div>
                 <div class="hero-image">
+                    <!-- MARCO DORADO ABSTRACTO -->
+                    <div class="golden-ring"></div>
+                    <div class="golden-frame"></div>
                     <div class="video-container">
                         <iframe src="https://www.canva.com/design/DAHEfTCwLMw/watch?embed" allowfullscreen></iframe>
                     </div>
@@ -973,12 +1101,5 @@
             💬
         </a>
     </div>
-
-    <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-toggle').addEventListener('click', function() {
-            document.querySelector('.nav-menu').classList.toggle('open');
-        });
-    </script>
 </body>
 </html>
