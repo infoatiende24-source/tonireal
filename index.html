@@ -76,12 +76,14 @@
         .logo-link {
             display: flex;
             align-items: center;
+            max-width: 250px;
         }
 
         .logo-image {
-            height: 56px;
+            max-height: 50px;
+            max-width: 100%;
             width: auto;
-            max-width: 200px;
+            height: auto;
             object-fit: contain;
         }
 
@@ -722,9 +724,10 @@
         }
 
         .footer-logo {
-            height: 50px;
+            max-height: 45px;
+            max-width: 200px;
             width: auto;
-            max-width: 180px;
+            height: auto;
             object-fit: contain;
         }
 
@@ -831,10 +834,13 @@
                 height: 280px;
             }
             .logo-image {
-                height: 45px;
+                max-height: 40px;
+            }
+            .logo-link {
+                max-width: 200px;
             }
             .footer-logo {
-                height: 40px;
+                max-height: 35px;
             }
         }
     </style>
