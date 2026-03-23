@@ -976,8 +976,8 @@
             border-radius: 50%;
             object-fit: cover;
             object-position: center top;
-            border: 6px solid var(--white);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15), 0 0 0 1px rgba(205, 168, 98, 0.2);
+            border: 6px solid var(--primary);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15), 0 0 0 3px rgba(205, 168, 98, 0.3);
         }
 
         .about-image-wrapper::before {
@@ -1375,7 +1375,8 @@
             height: 45px;
             border-radius: 50%;
             overflow: hidden;
-            border: 2px solid white;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 10px rgba(205, 168, 98, 0.3);
         }
 
         .chat-header-avatar img {
@@ -2097,29 +2098,49 @@
         }
 
         function openFullscreen(event) {
-            event.stopPropagation();
+            if (event) event.stopPropagation();
             
-            // Primero reproducir el video si está pausado
-            if (video.paused) {
-                video.play();
-                overlay.classList.add('hidden');
-                updatePlayPauseIcon(false);
-            }
+            // Verificar si ya está en pantalla completa
+            const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
             
-            // Activar pantalla completa
-            if (container.requestFullscreen) {
-                container.requestFullscreen();
-            } else if (container.webkitRequestFullscreen) {
-                container.webkitRequestFullscreen();
-            } else if (container.msRequestFullscreen) {
-                container.msRequestFullscreen();
-            }
-            
-            // En móvil, intentar bloquear la orientación a landscape
-            if (screen.orientation && screen.orientation.lock) {
-                screen.orientation.lock('landscape').catch(function() {
-                    // No todos los navegadores soportan esto
-                });
+            if (isFullscreen) {
+                // Salir de pantalla completa
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+                
+                // Desbloquear orientación
+                if (screen.orientation && screen.orientation.unlock) {
+                    screen.orientation.unlock();
+                }
+            } else {
+                // Entrar en pantalla completa
+                // Primero reproducir el video si está pausado
+                if (video.paused) {
+                    video.play();
+                    overlay.classList.add('hidden');
+                    updatePlayPauseIcon(false);
+                }
+                
+                // Activar pantalla completa
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                } else if (container.msRequestFullscreen) {
+                    container.msRequestFullscreen();
+                }
+                
+                // En móvil, intentar bloquear la orientación a landscape
+                if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock('landscape').catch(function() {
+                        // No todos los navegadores soportan esto
+                    });
+                }
             }
         }
 
