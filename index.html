@@ -673,11 +673,30 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
-            border: 1px solid #e5e5e5;
+            border: 2px solid transparent;
         }
 
-        .service-card.featured {
-            border: 2px solid var(--primary);
+        .service-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary), var(--primary-dark));
+            border-radius: var(--border-radius);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card.featured::before {
+            opacity: 1;
         }
 
         .service-card:hover {
@@ -750,38 +769,28 @@
         }
 
         .about-photo {
-            width: 350px;
-            height: 350px;
+            width: 320px;
+            height: 320px;
             border-radius: 50%;
             object-fit: cover;
-            object-position: center;
-            border: 5px solid var(--white);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
+            object-position: center top;
+            border: 6px solid var(--white);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15), 0 0 0 1px rgba(205, 168, 98, 0.2);
         }
 
         .about-image-wrapper::before {
             content: '';
             position: absolute;
-            width: 370px;
-            height: 370px;
+            width: 340px;
+            height: 340px;
             border-radius: 50%;
-            background: conic-gradient(
-                from 0deg,
-                transparent,
-                rgba(205, 168, 98, 0.3),
-                transparent,
-                rgba(205, 168, 98, 0.2),
-                transparent
-            );
-            animation: rotatePhotoGlow 8s linear infinite;
+            padding: 3px;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary), var(--primary-dark), var(--primary));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
             z-index: -1;
-        }
-
-        @keyframes rotatePhotoGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
 
         .about-text h2 {
@@ -1022,7 +1031,7 @@
             font-size: 0.85rem;
         }
 
-        /* WhatsApp Float */
+        /* WhatsApp Float - Estilo burbuja de chat */
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
@@ -1030,54 +1039,20 @@
             z-index: 100;
         }
 
-        .whatsapp-btn {
-            position: relative;
-            width: 68px;
-            height: 68px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        .whatsapp-chat-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 14px 24px;
+            border-radius: 50px;
             text-decoration: none;
-            font-size: 32px;
             box-shadow: 
                 0 8px 24px rgba(0,0,0,0.2),
                 0 0 40px rgba(205, 168, 98, 0.4),
-                0 0 80px rgba(205, 168, 98, 0.2);
+                0 0 60px rgba(205, 168, 98, 0.2);
             transition: var(--transition);
             animation: pulseGlow 2s ease-in-out infinite;
-        }
-
-        .whatsapp-btn::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            background: linear-gradient(
-                45deg,
-                transparent,
-                rgba(205, 168, 98, 0.4),
-                transparent,
-                rgba(205, 168, 98, 0.3),
-                transparent
-            );
-            animation: rotateGlow 3s linear infinite;
-            z-index: -1;
-        }
-
-        .whatsapp-btn::after {
-            content: '';
-            position: absolute;
-            inset: -8px;
-            border-radius: 50%;
-            background: radial-gradient(
-                circle,
-                rgba(205, 168, 98, 0.3) 0%,
-                transparent 70%
-            );
-            animation: pulseRing 2s ease-in-out infinite;
-            z-index: -2;
         }
 
         @keyframes pulseGlow {
@@ -1085,67 +1060,67 @@
                 box-shadow: 
                     0 8px 24px rgba(0,0,0,0.2),
                     0 0 40px rgba(205, 168, 98, 0.4),
-                    0 0 80px rgba(205, 168, 98, 0.2);
+                    0 0 60px rgba(205, 168, 98, 0.2);
             }
             50% {
                 box-shadow: 
                     0 8px 24px rgba(0,0,0,0.3),
-                    0 0 60px rgba(205, 168, 98, 0.6),
-                    0 0 100px rgba(205, 168, 98, 0.3);
+                    0 0 50px rgba(205, 168, 98, 0.6),
+                    0 0 80px rgba(205, 168, 98, 0.3);
             }
         }
 
-        @keyframes rotateGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes pulseRing {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
-
-        .whatsapp-btn:hover {
-            transform: scale(1.1);
+        .whatsapp-chat-btn:hover {
+            transform: scale(1.05);
             box-shadow: 
                 0 12px 32px rgba(0,0,0,0.3),
                 0 0 60px rgba(205, 168, 98, 0.6),
                 0 0 100px rgba(205, 168, 98, 0.4);
         }
 
-        /* WhatsApp tooltip */
-        .whatsapp-tooltip {
-            position: absolute;
-            right: 80px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--secondary);
-            color: var(--white);
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        .whatsapp-chat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #25D366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
-        .whatsapp-tooltip::after {
-            content: '';
-            position: absolute;
-            right: -8px;
-            top: 50%;
-            transform: translateY(-50%);
-            border-left: 8px solid var(--secondary);
-            border-top: 8px solid transparent;
-            border-bottom: 8px solid transparent;
+        .whatsapp-chat-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
         }
 
-        .whatsapp-float:hover .whatsapp-tooltip {
-            opacity: 1;
-            visibility: visible;
+        .whatsapp-chat-text {
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+
+        .whatsapp-chat-text .label {
+            font-size: 12px;
+            opacity: 0.9;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .whatsapp-chat-text .number {
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+        }
+
+        @media (max-width: 480px) {
+            .whatsapp-chat-text {
+                display: none;
+            }
+            .whatsapp-chat-btn {
+                padding: 14px;
+                border-radius: 50%;
+            }
         }
 
         /* Responsive */
@@ -1184,12 +1159,12 @@
                 height: 455px;
             }
             .about-photo {
-                width: 280px;
-                height: 280px;
+                width: 260px;
+                height: 260px;
             }
             .about-image-wrapper::before {
-                width: 296px;
-                height: 296px;
+                width: 276px;
+                height: 276px;
             }
             .logo-image {
                 width: 130px;
@@ -1533,12 +1508,12 @@
                         <span class="value">+34 667 470 862</span>
                     </div>
                 </a>
-                <a href="mailto:contacto@tonireal.com" class="contact-card">
+                <a href="mailto:infoatiende24@gmail.com" class="contact-card">
                     <div class="contact-icon">📧</div>
                     <div class="contact-info">
                         <h4>Email</h4>
                         <p>Respuesta en 24h</p>
-                        <span class="value">contacto@tonireal.com</span>
+                        <span class="value">infoatiende24@gmail.com</span>
                     </div>
                 </a>
             </div>
@@ -1562,11 +1537,16 @@
 
     <!-- WhatsApp Float -->
     <div class="whatsapp-float">
-        <span class="whatsapp-tooltip">¿Hablamos? 💬</span>
-        <a href="https://wa.me/34667470862?text=Hola%20Toni,%20me%20interesa%20saber%20más%20sobre%20tus%20servicios%20de%20WhatsApp%20Business" class="whatsapp-btn" target="blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="white">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
+        <a href="https://wa.me/34667470862?text=Hola%20Toni,%20me%20interesa%20saber%20más%20sobre%20tus%20servicios%20de%20WhatsApp%20Business" class="whatsapp-chat-btn" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+            <div class="whatsapp-chat-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+            </div>
+            <div class="whatsapp-chat-text">
+                <span class="label">¿Necesitas ayuda?</span>
+                <span class="number">+34 667 470 862</span>
+            </div>
         </a>
     </div>
 
