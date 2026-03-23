@@ -51,7 +51,7 @@
             color: var(--secondary);
         }
 
-        /* Navigation OSCURA - Logo con más espacio */
+        /* Navigation */
         .navbar {
             position: fixed;
             top: 0;
@@ -136,6 +136,8 @@
             text-decoration: none;
             transition: var(--transition);
             border: 2px solid transparent;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
         }
 
         .btn-small {
@@ -260,7 +262,7 @@
             flex-wrap: wrap;
         }
 
-        /* Video con Marco Dorado FINO adaptado al móvil */
+        /* Video con Marco Dorado */
         .hero-image {
             display: flex;
             justify-content: center;
@@ -274,7 +276,6 @@
             height: 560px;
         }
 
-        /* MARCO DORADO FINO - Adaptado al móvil */
         .golden-frame {
             position: absolute;
             top: -8px;
@@ -308,31 +309,6 @@
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             animation: rotateBorder 8s linear infinite;
-        }
-
-        .golden-frame::after {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            padding: 1px;
-            background: linear-gradient(
-                calc(var(--gradient-angle, 0deg) + 180deg),
-                var(--primary-dark),
-                var(--primary-light),
-                var(--primary),
-                var(--primary-dark)
-            );
-            border-radius: 55px;
-            -webkit-mask: 
-                linear-gradient(#fff 0 0) content-box, 
-                linear-gradient(#fff 0 0);
-            mask: 
-                linear-gradient(#fff 0 0) content-box, 
-                linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 12s linear infinite reverse;
-            opacity: 0.5;
         }
 
         @keyframes rotateBorder {
@@ -394,7 +370,230 @@
             color: var(--white);
         }
 
-        /* Services Section CON MARCO DORADO PREMIUM */
+        /* Audit Form Section */
+        .audit {
+            padding: 80px 0;
+            background: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .audit::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--light-bg) 0%, var(--white) 50%, var(--light-bg) 100%);
+        }
+
+        .audit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .audit-text .badge {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .audit-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .audit-text .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .audit-text > p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+            max-width: 480px;
+        }
+
+        .receive-list {
+            margin-bottom: 24px;
+        }
+
+        .receive-list h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .receive-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .receive-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .receive-icon.red {
+            background: #fef2f2;
+        }
+
+        .receive-icon.yellow {
+            background: #fefce8;
+        }
+
+        .receive-icon.green {
+            background: #f0fdf4;
+        }
+
+        .receive-content h5 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+        }
+
+        .receive-content p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .whatsapp-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--light-bg);
+            border-radius: 12px;
+            border: 1px solid #e5e5e5;
+            margin-top: 32px;
+        }
+
+        .whatsapp-badge-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .whatsapp-badge p {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        /* Form Card */
+        .form-card {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(205, 168, 98, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #a0a0a0;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 28px;
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0 8px 24px rgba(205, 168, 98, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .trust-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .trust-badge .icon {
+            color: var(--primary);
+        }
+
+        /* Services Section */
         .services {
             padding: 80px 0;
             background: var(--light-bg);
@@ -402,7 +601,6 @@
             overflow: hidden;
         }
 
-        /* Marco dorado premium de fondo */
         .services::before {
             content: '';
             position: absolute;
@@ -475,63 +673,16 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            border: 1px solid #e5e5e5;
         }
 
-        /* Marco dorado premium en cards de servicio */
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 2px;
-            background: linear-gradient(
-                var(--card-gradient, 0deg),
-                var(--primary-light),
-                var(--primary),
-                var(--primary-dark)
-            );
-            border-radius: var(--border-radius);
-            -webkit-mask: 
-                linear-gradient(#fff 0 0) content-box, 
-                linear-gradient(#fff 0 0);
-            mask: 
-                linear-gradient(#fff 0 0) content-box, 
-                linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            animation: cardGlow 6s linear infinite;
-        }
-
-        .service-card:hover::before {
-            opacity: 1;
-        }
-
-        .service-card.featured::before {
-            opacity: 1;
-        }
-
-        @keyframes cardGlow {
-            0% { --card-gradient: 0deg; }
-            100% { --card-gradient: 360deg; }
-        }
-
-        @property --card-gradient {
-            syntax: '<angle>';
-            initial-value: 0deg;
-            inherits: false;
+        .service-card.featured {
+            border: 2px solid var(--primary);
         }
 
         .service-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-        }
-
-        .service-card.featured {
-            border: 2px solid var(--primary);
         }
 
         .icon-wrapper {
@@ -758,6 +909,7 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            border: 1px solid #e5e5e5;
         }
 
         .contact-card:hover {
@@ -879,6 +1031,9 @@
             .hero-grid {
                 gap: 40px;
             }
+            .audit-text h2 {
+                font-size: 2rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -913,6 +1068,12 @@
             .footer-logo {
                 width: 130px;
             }
+            .form-card {
+                padding: 24px;
+            }
+            .trust-badges {
+                gap: 12px;
+            }
         }
     </style>
 </head>
@@ -925,13 +1086,14 @@
             </a>
             <ul class="nav-menu">
                 <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#auditoria">Auditoría</a></li>
                 <li><a href="#sobre-mi">Sobre Mí</a></li>
                 <li><a href="#proceso">Proceso</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
             <div class="nav-cta">
                 <a href="https://wa.me/34667470862?text=Hola%20Toni,%20me%20interesa%20saber%20más%20sobre%20tus%20servicios" class="btn btn-primary btn-small" target="_blank">
-                    📱 WhatsApp
+                    💬 WhatsApp
                 </a>
             </div>
             <button class="mobile-toggle" onclick="this.classList.toggle('open'); document.querySelector('.nav-menu').classList.toggle('open');">
@@ -956,7 +1118,7 @@
                     </p>
                     <div class="cta-wrapper">
                         <a href="https://wa.me/34667470862?text=Hola%20Toni,%20quiero%20escalar%20mi%20negocio" class="btn btn-primary" target="_blank">
-                            🚀 Escalar Mi Negocio
+                            ⚡ Escalar Mi Negocio
                         </a>
                         <a href="#servicios" class="btn btn-outline">
                             Ver Servicios
@@ -990,6 +1152,101 @@
                 <div class="stat-item">
                     <h3>24h</h3>
                     <p>Tiempo de respuesta</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audit Form Section -->
+    <section class="audit" id="auditoria">
+        <div class="container">
+            <div class="audit-grid">
+                <div class="audit-text">
+                    <span class="badge">100% Gratis · Sin compromiso</span>
+                    <h2>Auditoría gratuita de tu<br><span class="highlight">WhatsApp Business</span></h2>
+                    <p>Déjame tu contacto y te hago un análisis completo. Te digo exactamente qué está mal y cómo arreglarlo.</p>
+                    
+                    <div class="receive-list">
+                        <h4>¿Qué recibirás?</h4>
+                        
+                        <div class="receive-item">
+                            <div class="receive-icon red">❌</div>
+                            <div class="receive-content">
+                                <h5>Qué está mal</h5>
+                                <p>Errores que están haciendo que pierdas clientes</p>
+                            </div>
+                        </div>
+                        
+                        <div class="receive-item">
+                            <div class="receive-icon yellow">💡</div>
+                            <div class="receive-content">
+                                <h5>Qué mejorar</h5>
+                                <p>Oportunidades que no estás aprovechando</p>
+                            </div>
+                        </div>
+                        
+                        <div class="receive-item">
+                            <div class="receive-icon green">✅</div>
+                            <div class="receive-content">
+                                <h5>Cómo solucionarlo</h5>
+                                <p>Plan concreto paso a paso para tu negocio</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="whatsapp-badge">
+                        <div class="whatsapp-badge-icon">💬</div>
+                        <p>Recibirás la auditoría por WhatsApp en 24-48h</p>
+                    </div>
+                </div>
+                
+                <div class="form-card">
+                    <form id="auditForm">
+                        <div class="form-group">
+                            <label for="nombre">Tu nombre</label>
+                            <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan García" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="negocio">Nombre del negocio</label>
+                            <input type="text" id="negocio" name="negocio" placeholder="Ej: Clínica Dental Sonrisas" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="whatsapp">WhatsApp</label>
+                            <input type="tel" id="whatsapp" name="whatsapp" placeholder="+34 600 000 000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="usaWhatsapp">¿Usas WhatsApp Business actualmente?</label>
+                            <select id="usaWhatsapp" name="usaWhatsapp" required>
+                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option value="No, uso WhatsApp normal">No, uso WhatsApp normal</option>
+                                <option value="Sí, pero básico (solo chat)">Sí, pero básico (solo chat)</option>
+                                <option value="Sí, con catálogo y respuestas">Sí, con catálogo y respuestas</option>
+                                <option value="No estoy seguro">No estoy seguro</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">
+                            Solicitar auditoría gratuita →
+                        </button>
+                        
+                        <div class="trust-badges">
+                            <div class="trust-badge">
+                                <span class="icon">✓</span>
+                                <span>Sin compromiso</span>
+                            </div>
+                            <div class="trust-badge">
+                                <span class="icon">⚡</span>
+                                <span>Respuesta en 24-48h</span>
+                            </div>
+                            <div class="trust-badge">
+                                <span class="icon">🎯</span>
+                                <span>100% gratis</span>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -1180,5 +1437,21 @@
             💬
         </a>
     </div>
+
+    <!-- JavaScript for Form -->
+    <script>
+        document.getElementById('auditForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nombre = document.getElementById('nombre').value;
+            const negocio = document.getElementById('negocio').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+            const usaWhatsapp = document.getElementById('usaWhatsapp').value;
+            
+            const message = `Hola Toni, quiero solicitar una auditoría gratuita.%0A%0ANombre: ${nombre}%0ANegocio: ${negocio}%0AWhatsApp: ${whatsapp}%0A¿Usa WhatsApp Business?: ${usaWhatsapp}`;
+            
+            window.open(`https://wa.me/34667470862?text=${message}`, '_blank');
+        });
+    </script>
 </body>
 </html>
