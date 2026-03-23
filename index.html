@@ -340,51 +340,41 @@
             background: var(--secondary);
         }
 
-        .video-container iframe {
+        /* Video Poster con boton de play */
+        .video-poster {
             width: 100%;
             height: 100%;
-            border: none;
+            position: relative;
+            cursor: pointer;
+            border-radius: 45px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+            text-decoration: none;
             display: block;
         }
 
-        /* Video Thumbnail para móvil */
-        .video-link-wrapper {
-            display: none;
-            width: 100%;
-            height: 100%;
-            position: relative;
-            text-decoration: none;
-        }
-
-        .video-placeholder-bg {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .video-placeholder-bg::before {
+        .video-poster::before {
             content: '';
             position: absolute;
             inset: 0;
             background: 
                 radial-gradient(circle at 30% 30%, rgba(205, 168, 98, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 70% 70%, rgba(205, 168, 98, 0.1) 0%, transparent 50%);
-        }
-
-        .video-placeholder-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
             z-index: 1;
         }
 
-        .video-placeholder-content .play-icon {
+        .video-poster-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            z-index: 2;
+        }
+
+        .video-poster .play-icon {
             width: 90px;
             height: 90px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -397,7 +387,7 @@
             animation: pulsePlay 2s ease-in-out infinite;
         }
 
-        .video-placeholder-content .play-icon::after {
+        .video-poster .play-icon::after {
             content: '';
             width: 0;
             height: 0;
@@ -412,12 +402,12 @@
             50% { transform: scale(1.05); }
         }
 
-        .video-link-wrapper:hover .play-icon {
+        .video-poster:hover .play-icon {
             transform: scale(1.1);
             box-shadow: 0 12px 40px rgba(205, 168, 98, 0.5);
         }
 
-        .video-text {
+        .video-poster-text {
             color: var(--primary);
             font-size: 14px;
             font-weight: 500;
@@ -425,32 +415,42 @@
             letter-spacing: 0.5px;
         }
 
-        /* En móvil el video se reproduce directamente */
-        @media (max-width: 768px) {
-            .video-link-wrapper {
-                display: none !important;
-            }
-        }
-
-        /* Video Thumbnail */
-        .video-thumbnail {
-            position: relative;
+        /* Video Player Container */
+        .video-player-container {
             width: 100%;
             height: 100%;
-            cursor: pointer;
+            position: relative;
+            border-radius: 45px;
+            overflow: hidden;
+            background: #000;
         }
 
-        .video-thumbnail img {
+        .video-player-container video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .play-button {
+        .video-player-container .play-overlay {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            background: rgba(0,0,0,0.3);
+            z-index: 1;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .video-player-container .play-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .video-player-container .play-overlay .play-icon {
             width: 80px;
             height: 80px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -458,11 +458,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 40px rgba(205, 168, 98, 0.3);
             transition: var(--transition);
+            animation: pulsePlay 2s ease-in-out infinite;
         }
 
-        .play-button::after {
+        .video-player-container .play-overlay .play-icon::after {
             content: '';
             width: 0;
             height: 0;
@@ -470,11 +471,6 @@
             border-top: 14px solid transparent;
             border-bottom: 14px solid transparent;
             margin-left: 6px;
-        }
-
-        .video-thumbnail:hover .play-button {
-            transform: translate(-50%, -50%) scale(1.1);
-            box-shadow: 0 12px 40px rgba(205, 168, 98, 0.5);
         }
 
         /* Stats Section */
@@ -1613,8 +1609,17 @@
                     <div class="video-wrapper">
                         <div class="golden-frame"></div>
                         <div class="video-container">
-                            <!-- Video reproducible en desktop y móvil -->
-                            <iframe src="https://www.canva.com/design/DAHEfTCwLMw/watch?embed" allowfullscreen allow="autoplay; fullscreen"></iframe>
+                            <!-- Video MP4 con reproducción inline -->
+                            <div class="video-player-container">
+                                <video id="heroVideo" playsinline webkit-playsinline preload="metadata" poster="">
+                                    <source src="video-toni-real.mp4" type="video/mp4">
+                                    Tu navegador no soporta video HTML5.
+                                </video>
+                                <div class="play-overlay" id="playOverlay" onclick="playVideo()">
+                                    <div class="play-icon"></div>
+                                    <span class="video-poster-text">Toca para ver el video</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1983,6 +1988,34 @@
 
     <!-- JavaScript -->
     <script>
+        // Video Player Functions
+        function playVideo() {
+            const video = document.getElementById('heroVideo');
+            const overlay = document.getElementById('playOverlay');
+            
+            video.play();
+            overlay.classList.add('hidden');
+        }
+
+        // Mostrar overlay cuando el video se pausa o termina
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('heroVideo');
+            const overlay = document.getElementById('playOverlay');
+            
+            video.addEventListener('pause', function() {
+                overlay.classList.remove('hidden');
+            });
+            
+            video.addEventListener('ended', function() {
+                overlay.classList.remove('hidden');
+                video.currentTime = 0;
+            });
+
+            video.addEventListener('play', function() {
+                overlay.classList.add('hidden');
+            });
+        });
+
         // Toggle WhatsApp Popup
         function toggleWhatsAppPopup() {
             const popup = document.getElementById('whatsappPopup');
