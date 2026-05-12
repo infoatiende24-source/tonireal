@@ -1,0 +1,357 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-gold: #cda862;
+  --color-gold-light: #e8d5a3;
+  --color-gold-dark: #b48b3c;
+  --color-gold-accent: #f0e6cc;
+  --color-surface: #0d0d0d;
+  --color-surface-light: #1a1a1a;
+  --color-surface-lighter: #252525;
+  --color-surface-glass: rgba(255, 255, 255, 0.03);
+  --color-whatsapp-green: #25D366;
+  --color-whatsapp-dark: #128C7E;
+  --color-whatsapp-light: #DCF8C6;
+}
+
+:root {
+  --background: #050505;
+  --foreground: #f5f0e8;
+  --primary: #cda862;
+  --primary-foreground: #050505;
+}
+
+@layer base {
+  * {
+    @apply border-gold-dark/20 outline-gold/50;
+  }
+
+  body {
+    @apply bg-[#050505] text-[#f5f0e8] overflow-x-hidden;
+    font-family: var(--font-inter), system-ui, sans-serif;
+  }
+
+  ::selection {
+    background: rgba(205, 168, 98, 0.3);
+    color: #f5f0e8;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #050505;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #cda862, #b48b3c);
+    border-radius: 3px;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-playfair), Georgia, serif;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #f0e6cc, #e8d5a3, #cda862, #b48b3c, #cda862, #e8d5a3, #f0e6cc);
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer-gold 4s ease-in-out infinite;
+  }
+
+  .text-gradient-silver {
+    background: linear-gradient(180deg, #f5f0e8 0%, #b0a898 50%, #f5f0e8 100%);
+    background-size: 100% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer-silver 6s ease-in-out infinite;
+  }
+
+  .bg-glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(205, 168, 98, 0.1);
+  }
+
+  .bg-glass-strong {
+    background: rgba(13, 13, 13, 0.8);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(205, 168, 98, 0.15);
+  }
+
+  .border-gradient-gold {
+    position: relative;
+  }
+
+  .border-gradient-gold::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, #cda862, transparent, #cda862);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(205, 168, 98, 0.15), 0 0 60px rgba(205, 168, 98, 0.05);
+  }
+
+  .glow-gold-strong {
+    box-shadow: 0 0 30px rgba(205, 168, 98, 0.25), 0 0 80px rgba(205, 168, 98, 0.1), 0 0 120px rgba(205, 168, 98, 0.05);
+  }
+
+  .text-shadow-gold {
+    text-shadow: 0 0 40px rgba(205, 168, 98, 0.3);
+  }
+
+  .noise-overlay {
+    position: relative;
+  }
+
+  .noise-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .cinematic-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #cda862, transparent);
+  }
+
+  .cinematic-vignette {
+    box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7);
+  }
+}
+
+@keyframes shimmer-gold {
+  0%, 100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 300% center;
+  }
+}
+
+@keyframes shimmer-silver {
+  0%, 100% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes rotate-border {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes pulse-gold {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(205, 168, 98, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(205, 168, 98, 0.4), 0 0 80px rgba(205, 168, 98, 0.15);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes particle-float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(20px);
+    opacity: 0;
+  }
+}
+
+/* Premium button styles */
+.btn-premium {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.btn-premium-gold {
+  background: linear-gradient(135deg, #cda862, #b48b3c);
+  color: #050505;
+}
+
+.btn-premium-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(205, 168, 98, 0.3), 0 0 80px rgba(205, 168, 98, 0.1);
+}
+
+.btn-premium-outline {
+  background: transparent;
+  color: #cda862;
+  border: 1px solid rgba(205, 168, 98, 0.4);
+}
+
+.btn-premium-outline:hover {
+  background: rgba(205, 168, 98, 0.1);
+  border-color: #cda862;
+  transform: translateY(-2px);
+}
+
+/* Video frame animation */
+.video-frame-premium {
+  position: relative;
+  border-radius: 40px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #cda862, #b48b3c, #e8d5a3, #cda862);
+  background-size: 300% 300%;
+  animation: rotate-border 8s ease infinite;
+  padding: 3px;
+}
+
+.video-frame-premium::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 42px;
+  background: linear-gradient(135deg, #cda862, transparent, #e8d5a3, transparent, #b48b3c);
+  background-size: 300% 300%;
+  animation: rotate-border 6s ease infinite;
+  z-index: -1;
+  filter: blur(15px);
+  opacity: 0.5;
+}
+
+/* WhatsApp premium floating */
+.whatsapp-float-premium {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  animation: pulse-gold 3s ease-in-out infinite;
+}
+
+.whatsapp-float-premium:hover {
+  animation: none;
+  transform: scale(1.05);
+}
+
+/* Section reveal animation helper */
+.reveal-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-section.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Premium card hover */
+.card-premium {
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(205, 168, 98, 0.08);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.card-premium::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(205, 168, 98, 0.3), transparent);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.card-premium:hover {
+  transform: translateY(-8px);
+  border-color: rgba(205, 168, 98, 0.2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(205, 168, 98, 0.05);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.card-premium:hover::before {
+  opacity: 1;
+}
