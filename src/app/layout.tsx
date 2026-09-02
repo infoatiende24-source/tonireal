@@ -15,15 +15,14 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Toni Real | Automatizo WhatsApp Business para Convertir Visitantes en Clientes",
+  title: "Toni Real | IA que devuelve tiempo a las personas",
   description:
-    "Automatizo respuestas y convierto consultas en ventas mientras tú descansas. WhatsApp Business profesional, landing pages que convierten y automatización inteligente 24/7.",
+    "Webs, automatizaciones e inteligencia artificial diseñadas para que tu negocio tenga menos ruido, más presencia y mejores conversaciones.",
   keywords: [
+    "inteligencia artificial",
+    "automatización con propósito",
     "WhatsApp Business",
-    "automatización",
-    "chatbot",
-    "ventas online",
-    "landing pages",
+    "webs que convierten",
     "Toni Real",
     "marketing digital",
   ],
@@ -32,9 +31,9 @@ export const metadata: Metadata = {
     icon: "/logo.png",
   },
   openGraph: {
-    title: "Toni Real | Automatizo WhatsApp Business",
+    title: "Toni Real | IA que devuelve tiempo a las personas",
     description:
-      "Convierte visitantes en clientes las 24h con automatización inteligente de WhatsApp Business.",
+      "Tecnología, diseño y estrategia al servicio de negocios más humanos.",
     type: "website",
   },
 };
