@@ -6,18 +6,18 @@ import { motion, useInView } from "framer-motion";
 const whatYouReceive = [
   {
     icon: "✕",
-    title: "Los 3 errores críticos",
-    desc: "Exactamente qué te está haciendo perder ventas cada día",
+    title: "Los puntos de fricción",
+    desc: "Qué está haciendo que tu negocio pierda tiempo, atención u oportunidades",
   },
   {
     icon: "💡",
-    title: "Las 2 oportunidades ocultas",
-    desc: "Técnicas que tus competidores ya usan y tú estás ignorando",
+    title: "Las oportunidades más claras",
+    desc: "Qué puede simplificarse sin perder cercanía con tus clientes",
   },
   {
     icon: "✓",
-    title: "Plan de acción personalizado",
-    desc: "5 pasos exactos para convertir más consultas en ventas esta semana",
+    title: "Un siguiente paso realista",
+    desc: "Una propuesta concreta, honesta y adaptada a tu momento",
   },
 ];
 
@@ -33,7 +33,7 @@ export default function Auditoria() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const msg = `Hola Toni, quiero mi auditoría gratuita de WhatsApp Business.\n\nNombre: ${formData.nombre}\nNegocio: ${formData.negocio}\nWhatsApp: ${formData.whatsapp}\n¿Usas WhatsApp Business?: ${formData.usaWhatsapp}`;
+    const msg = `Hola Toni, quiero una primera mirada a mi negocio.\n\nNombre: ${formData.nombre}\nNegocio: ${formData.negocio}\nWhatsApp: ${formData.whatsapp}\n¿Usas WhatsApp Business?: ${formData.usaWhatsapp}`;
     window.open(
       `https://wa.me/34667470862?text=${encodeURIComponent(msg)}`,
       "_blank"
@@ -68,24 +68,14 @@ export default function Auditoria() {
             </div>
 
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
-              Análisis de Oportunidades de tu{" "}
-              <span className="text-gradient-gold">WhatsApp Business</span>
+              Una primera mirada a{" "}
+              <span className="text-gradient-gold">tu negocio</span>
             </h2>
 
             <p className="text-[#a09888] text-lg leading-relaxed">
-              En 24-48h recibirás un informe personalizado con{" "}
-              <span className="text-gold font-medium">
-                los 3 errores
-              </span>{" "}
-              que te están haciendo perder clientes,{" "}
-              <span className="text-gold font-medium">
-                las 2 oportunidades
-              </span>{" "}
-              que no estás aprovechando, y un{" "}
-              <span className="text-gold font-medium">
-                plan concreto de acción
-              </span>{" "}
-              para tu negocio.
+              Cuéntame dónde notas más ruido: captación, atención, seguimiento o
+              procesos repetitivos. Recibirás una primera propuesta honesta para
+              saber si la web, la automatización o la IA pueden darte aire.
             </p>
 
             {/* What you receive */}
@@ -112,8 +102,8 @@ export default function Auditoria() {
             </div>
 
             <p className="text-sm text-[#686868] flex items-center gap-2">
-              <span className="text-gold">💬</span> Recibirás el análisis por
-              WhatsApp en 24-48h
+              <span className="text-gold">💬</span> Te responderé por WhatsApp
+              en 24-48h
             </p>
           </motion.div>
 
@@ -125,7 +115,7 @@ export default function Auditoria() {
           >
             <div className="card-premium p-8 sm:p-10">
               <h3 className="font-display text-2xl font-bold mb-6 text-gradient-gold">
-                Solicita tu análisis gratuito
+                Cuéntame qué necesitas ordenar
               </h3>
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
@@ -207,7 +197,7 @@ export default function Auditoria() {
                   type="submit"
                   className="w-full btn-premium btn-premium-gold justify-center mt-4"
                 >
-                  Solicitar mi análisis personalizado →
+                  Solicitar una primera mirada →
                 </button>
 
                 <div className="flex flex-wrap justify-center gap-4 pt-2 text-xs text-[#686868]">
