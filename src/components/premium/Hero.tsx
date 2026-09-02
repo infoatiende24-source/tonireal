@@ -104,7 +104,7 @@ export default function Hero() {
             >
               <span className="w-2 h-2 bg-gold rounded-full animate-pulse" />
               <span className="text-xs font-medium text-gold-light tracking-wider uppercase">
-                Tu WhatsApp convierte visitantes en clientes las 24h
+                Tecnología al servicio de las personas
               </span>
             </motion.div>
 
@@ -115,9 +115,8 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight"
             >
-              <span className="text-gradient-silver">Tu WhatsApp convierte visitantes en</span>{" "}
-              <span className="text-gradient-gold">clientes las 24h</span>{" "}
-              <span className="text-gradient-silver">mientras tú te centras en tu negocio</span>
+              <span className="text-gradient-silver">IA que devuelve</span>{" "}
+              <span className="text-gradient-gold">tiempo a las personas</span>
             </motion.h1>
 
             {/* Subtitle */}
@@ -127,12 +126,10 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-lg text-[#a09888] leading-relaxed max-w-xl"
             >
-              Cada hora que no respondes un WhatsApp es{" "}
-              <span className="text-gold font-semibold">
-                dinero que se va a tu competencia
-              </span>
-              . Automatizo respuestas y convierto consultas en ventas mientras tú
-              te ocupas de lo que importa.
+              No creo sistemas para sustituir a las personas. Diseño webs,
+              automatizaciones e inteligencia artificial para que tu negocio
+              atienda mejor, gane claridad y tú puedas volver a centrarte en lo
+              que importa.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -157,12 +154,12 @@ export default function Hero() {
                     className="w-6 h-6 drop-shadow-[0_0_8px_rgba(205,168,98,0.8)]"
                   />
                   <span className="font-semibold text-[#050505] text-sm sm:text-base tracking-wide">
-                    Ver Cómo Automatizar Mi WhatsApp
+                    Hablemos de tu negocio
                   </span>
                 </div>
               </a>
-              <a href="#servicios" className="btn-premium btn-premium-outline">
-                Ver Servicios
+              <a href="#filosofia" className="btn-premium btn-premium-outline">
+                Conocer mi enfoque
               </a>
             </motion.div>
           </div>
