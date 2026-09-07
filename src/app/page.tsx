@@ -10,10 +10,12 @@ import CTASection from "@/components/premium/CTA";
 import Contact from "@/components/premium/Contact";
 import Footer from "@/components/premium/Footer";
 import WhatsAppFloat from "@/components/premium/WhatsAppFloat";
+import CinematicIntro from "@/components/premium/CinematicIntro";
 
 export default function Home() {
   return (
     <main className="relative min-h-screen bg-[#050505] noise-overlay">
+      <CinematicIntro />
       <Navbar />
       <Hero />
       <Stats />
