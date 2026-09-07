@@ -88,14 +88,14 @@ export default function CinematicIntro() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.85 } }}
         >
-          <AnimatePresence mode="wait">
+          <AnimatePresence initial={false}>
             <motion.div
               key={frame}
               className="absolute inset-0"
-              initial={{ opacity: 0, scale: 1.07 }}
+              initial={{ opacity: 0, scale: 1.025 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.018 }}
-              transition={{ duration: 0.72, ease: "easeOut" }}
+              exit={{ opacity: 0, scale: 1.005 }}
+              transition={{ duration: 0.9, ease: "easeInOut" }}
             >
               <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${frames[frame].image})` }} />
               <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-black/85" />
