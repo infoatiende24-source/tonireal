@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const frames = [
   { image: "/intro-v2/frame-1-origin.webp", eyebrow: "EL ORIGEN", line: "Todo cambio real empieza por comprender cómo estás pensando." },
@@ -13,69 +13,127 @@ const frames = [
 ];
 
 export default function CinematicIntro() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [frame, setFrame] = useState(0);
+  const locked = useRef(false);
+  const touchStart = useRef<number | null>(null);
 
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || sessionStorage.getItem("toni-intro-seen")) return;
-    setVisible(true);
-    const timer = window.setInterval(() => setFrame((current) => current + 1), 2100);
-    return () => window.clearInterval(timer);
-  }, []);
+  const move = (direction: 1 | -1) => {
+    if (locked.current) return;
+    locked.current = true;
 
-  useEffect(() => {
-    if (frame < frames.length) return;
-    const timer = window.setTimeout(() => {
-      sessionStorage.setItem("toni-intro-seen", "true");
+    if (direction === 1 && frame === frames.length - 1) {
       setVisible(false);
-    }, 1300);
-    return () => window.clearTimeout(timer);
-  }, [frame]);
+    } else {
+      setFrame((current) => Math.max(0, Math.min(frames.length - 1, current + direction)));
+    }
 
-  const close = () => {
-    sessionStorage.setItem("toni-intro-seen", "true");
-    setVisible(false);
+    window.setTimeout(() => {
+      locked.current = false;
+    }, 780);
   };
+
+  useEffect(() => {
+    if (!visible) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      if (Math.abs(event.deltaY) < 12) return;
+      move(event.deltaY > 0 ? 1 : -1);
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (["ArrowDown", "PageDown", " "].includes(event.key)) {
+        event.preventDefault();
+        move(1);
+      }
+      if (["ArrowUp", "PageUp"].includes(event.key)) {
+        event.preventDefault();
+        move(-1);
+      }
+    };
+    const onTouchStart = (event: TouchEvent) => {
+      touchStart.current = event.changedTouches[0]?.clientY ?? null;
+    };
+    const onTouchEnd = (event: TouchEvent) => {
+      const start = touchStart.current;
+      const end = event.changedTouches[0]?.clientY;
+      if (start === null || end === undefined || Math.abs(start - end) < 35) return;
+      move(start > end ? 1 : -1);
+      touchStart.current = null;
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [frame, visible]);
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.section
-          aria-label="Introducción Toni Real"
+          aria-label="Introducción Toni Real. Usa el desplazamiento para avanzar."
           className="fixed inset-0 z-[100] overflow-hidden bg-black text-[#f7f1e7]"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.9 } }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 0.85 } }}
         >
           <AnimatePresence mode="wait">
-            {frame < frames.length && (
-              <motion.div key={frame} className="absolute inset-0" initial={{ opacity: 0, scale: 1.08 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.025 }} transition={{ duration: 1.15, ease: "easeOut" }}>
-                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${frames[frame].image})` }} />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-black/80" />
-              </motion.div>
-            )}
+            <motion.div
+              key={frame}
+              className="absolute inset-0"
+              initial={{ opacity: 0, scale: 1.07 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.018 }}
+              transition={{ duration: 0.72, ease: "easeOut" }}
+            >
+              <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${frames[frame].image})` }} />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-black/85" />
+            </motion.div>
           </AnimatePresence>
 
           <div className="relative flex h-full flex-col justify-between p-6 sm:p-10">
             <div className="flex items-center justify-between text-[10px] font-medium tracking-[0.34em] text-[#d6ad72] sm:text-xs">
-              <span>TONI REAL</span><span>0{Math.min(frame + 1, 6)} / 06</span>
+              <span>TONI REAL</span>
+              <span>0{frame + 1} / 06</span>
             </div>
+
             <div className="mb-[16vh] max-w-3xl">
-              {frame < frames.length ? <motion.div key={frame} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.32, duration: 0.7 }}><div className="mb-3 flex items-center gap-3 text-[10px] tracking-[0.3em] text-[#d6ad72]"><span className="text-lg leading-none">↗</span>{frames[frame].eyebrow}</div><p className="font-serif text-3xl leading-[1.08] sm:text-5xl md:text-6xl">{frames[frame].line}</p></motion.div> : <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}><p className="text-xs tracking-[0.35em] text-[#d6ad72]">TONI REAL</p><h1 className="mt-4 font-serif text-5xl leading-none sm:text-7xl">Menos ruido.<br />Más presencia.</h1></motion.div>}
-            </div>
-            {frame < frames.length && (
-              <motion.div
-                key={`arrow-${frame}`}
-                aria-hidden="true"
-                className="pointer-events-none absolute left-1/2 top-[57%] flex -translate-x-1/2 flex-col items-center text-[#d6ad72]"
-                initial={{ opacity: 0, y: -12 }}
-                animate={{ opacity: 0.82, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-              >
-                <svg width="28" height="68" viewBox="0 0 28 68" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M14 2V58M5 49L14 58L23 49" stroke="currentColor" strokeWidth="1.25" />
-                </svg>
+              <motion.div key={`copy-${frame}`} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22, duration: 0.5 }}>
+                <div className="mb-3 flex items-center gap-3 text-[10px] tracking-[0.3em] text-[#d6ad72]">
+                  <span className="text-lg leading-none">↗</span>{frames[frame].eyebrow}
+                </div>
+                <p className="font-serif text-3xl leading-[1.08] sm:text-5xl md:text-6xl">{frames[frame].line}</p>
               </motion.div>
-            )}
-            <button onClick={close} className="self-start text-[10px] tracking-[0.25em] text-white/60 transition hover:text-white">SALTAR INTRODUCCIÓN</button>
+            </div>
+
+            <motion.div
+              key={`arrow-${frame}`}
+              aria-hidden="true"
+              className="pointer-events-none absolute left-1/2 top-[57%] flex -translate-x-1/2 flex-col items-center text-[#d6ad72]"
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 0.82, y: 0 }}
+              transition={{ delay: 0.45, duration: 0.48 }}
+            >
+              <svg width="28" height="68" viewBox="0 0 28 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 2V58M5 49L14 58L23 49" stroke="currentColor" strokeWidth="1.25" />
+              </svg>
+            </motion.div>
+
+            <div className="flex items-center gap-4 text-[10px] tracking-[0.25em] text-white/60">
+              <span>{frame === frames.length - 1 ? "DESLIZA PARA ENTRAR" : "DESLIZA PARA CONTINUAR"}</span>
+              <button onClick={() => setVisible(false)} className="transition hover:text-white">SALTAR</button>
+            </div>
           </div>
         </motion.section>
       )}
