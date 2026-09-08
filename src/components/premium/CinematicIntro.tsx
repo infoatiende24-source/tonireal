@@ -4,12 +4,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 const frames = [
-  { image: "/intro-v2/frame-1-origin.webp", eyebrow: "EL ORIGEN", line: "Todo cambio real empieza por comprender cómo estás pensando." },
+  { image: "/intro-v2/frame-1-origin.webp", eyebrow: "EL ORIGEN", line: "Todo cambio comienza por comprender cómo estás pensando." },
   { image: "/intro-v2/frame-2-noise.webp", eyebrow: "EL RUIDO", line: "No te falta capacidad. Te sobran interrupciones." },
-  { image: "/intro-v2/frame-3-clarity.webp", eyebrow: "LA CLARIDAD", line: "Cuando te observas con claridad, eliges mejor dónde poner tu atención." },
-  { image: "/intro-v2/frame-4-ai.webp", eyebrow: "LA IA ÚTIL", line: "La IA no viene a pensar por ti. Viene a ayudarte a pensar mejor." },
-  { image: "/intro-v2/frame-5-solutions.webp", eyebrow: "LA SOLUCIÓN", line: "Menos tareas dispersas. Más soluciones que funcionan." },
-  { image: "/intro-v2/frame-6-presence.webp", eyebrow: "LA PRESENCIA", line: "IA que devuelve tiempo a las personas." },
+  { image: "/intro-v2/frame-3-clarity.webp", eyebrow: "LA CLARIDAD", line: "Cuando te observas con intención, eliges mejor dónde poner tu atención." },
+  { image: "/intro-v2/frame-4-ai.webp", eyebrow: "LA IA ÚTIL", line: "La IA no viene a pensar por ti. Viene a ayudarte a decidir, crear y trabajar mejor." },
+  { image: "/intro-v2/frame-5-solutions.webp", eyebrow: "LA SOLUCIÓN", line: "Menos tareas dispersas y repetitivas. Más soluciones que funcionan." },
+  { image: "/intro-v2/frame-6-presence.webp", eyebrow: "LA PRESENCIA", line: "La IA que devuelve tiempo a las personas." },
 ];
 
 export default function CinematicIntro() {
@@ -109,8 +109,8 @@ export default function CinematicIntro() {
             </div>
 
             <div className="mb-[16vh] max-w-3xl">
-              <motion.div key={`copy-${frame}`} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22, duration: 0.5 }}>
-                <div className="mb-3 flex items-center gap-3 text-[10px] tracking-[0.3em] text-[#d6ad72]">
+              <motion.div key={`copy-${frame}`} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22, duration: 0.5 }} style={{ textShadow: "0 2px 16px rgba(0, 0, 0, 0.92)" }}>
+                <div className="mb-3 flex items-center gap-3 text-sm font-medium tracking-[0.3em] text-[#d6ad72] sm:text-base">
                   <span className="text-lg leading-none">↗</span>{frames[frame].eyebrow}
                 </div>
                 <p className="font-serif text-3xl leading-[1.08] sm:text-5xl md:text-6xl">{frames[frame].line}</p>
