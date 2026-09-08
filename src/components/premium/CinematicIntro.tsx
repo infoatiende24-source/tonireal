@@ -10,6 +10,7 @@ const frames = [
   { image: "/intro-v2/frame-4-ai.webp", eyebrow: "LA IA ÚTIL", line: "La IA no viene a pensar por ti. Viene a ayudarte a decidir, crear y trabajar mejor." },
   { image: "/intro-v2/frame-5-solutions.webp", eyebrow: "LA SOLUCIÓN", line: "Menos tareas dispersas y repetitivas. Más soluciones que funcionan." },
   { image: "/intro-v2/frame-6-presence.webp", eyebrow: "LA PRESENCIA", line: "La IA que devuelve tiempo a las personas." },
+  { image: "/intro-v2/frame-7-threshold.webp", eyebrow: "EL UMBRAL", line: "Entra en lo que podemos construir juntos." },
 ];
 
 export default function CinematicIntro() {
@@ -86,7 +87,7 @@ export default function CinematicIntro() {
           className="fixed inset-0 z-[100] overflow-hidden bg-black text-[#f7f1e7]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.85 } }}
+          exit={{ opacity: 0, scale: 1.12, transition: { duration: 0.9, ease: "easeIn" } }}
         >
           <AnimatePresence initial={false}>
             <motion.div
@@ -105,7 +106,7 @@ export default function CinematicIntro() {
           <div className="relative flex h-full flex-col justify-between p-6 sm:p-10">
             <div className="flex items-center justify-between text-[10px] font-medium tracking-[0.34em] text-[#d6ad72] sm:text-xs">
               <span>TONI REAL</span>
-              <span>0{frame + 1} / 06</span>
+              <span>{String(frame + 1).padStart(2, "0")} / {String(frames.length).padStart(2, "0")}</span>
             </div>
 
             <div className="mb-[16vh] max-w-3xl">
@@ -131,7 +132,7 @@ export default function CinematicIntro() {
             </motion.div>
 
             <div className="flex items-center gap-4 text-[10px] tracking-[0.25em] text-white/60">
-              <span>{frame === frames.length - 1 ? "DESLIZA PARA ENTRAR" : "DESLIZA PARA CONTINUAR"}</span>
+              <span>{frame === frames.length - 1 ? "DESLIZA PARA ATRAVESAR EL UMBRAL" : "DESLIZA PARA CONTINUAR"}</span>
               <button onClick={() => setVisible(false)} className="transition hover:text-white">SALTAR</button>
             </div>
           </div>
