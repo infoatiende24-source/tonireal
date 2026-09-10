@@ -30,7 +30,9 @@ export default function CinematicIntro() {
     const ctx = node.getContext("2d", { alpha: true });
     if (!ctx) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const origin = new Image(), portal = new Image();
+    const imageNames = ["frame-1-origin", "frame-2-noise", "frame-3-clarity", "frame-4-ai", "frame-5-solutions", "frame-6-presence"];
+    const artworks = imageNames.map(() => new Image());
+    const origin = artworks[0], portal = new Image();
     let particles: Particle[] = [], width = 1, height = 1, raf = 0, disposed = false;
     let mouseX = 0, mouseY = 0;
     let active = -1;
@@ -58,10 +60,14 @@ export default function CinematicIntro() {
     };
     origin.onerror = () => schedule();
     portal.onload = () => schedule();
-    origin.src = "/intro-v2/frame-1-origin.webp";
+    artworks.forEach((image, index) => {
+      if (index > 0) image.onload = () => { if (!disposed) schedule(); };
+      image.onerror = () => schedule();
+      image.src = `/intro-v2/${imageNames[index]}.webp`;
+    });
     portal.src = "/intro-v2/frame-7-threshold.webp";
 
-    const point = (v: Particle, p: number, trail = 0) => {
+    const point = (v: Particle, p: number, fusion: number, trail = 0) => {
       const scatter = ease(0.06, 0.20, p) * (1 - ease(0.27, 0.41, p));
       const orbit = ease(0.39, 0.54, p) * (1 - ease(0.65, 0.76, p));
       const gate = ease(0.76, 0.89, p);
@@ -79,7 +85,13 @@ export default function CinematicIntro() {
       const rx = x * Math.cos(rotation) + z * Math.sin(rotation);
       const rz = z * Math.cos(rotation) - x * Math.sin(rotation);
       const perspective = 3.8 / (3.8 + rz);
-      return { x: rx * perspective, y: (y + mouseY * 0.035) * perspective, scale: perspective };
+      // At rest, every point lands on its exact source pixel; motion peels it away
+      // and returns it to the same registered folds as the next artwork emerges.
+      return {
+        x: v.x + (rx * perspective - v.x) * fusion,
+        y: v.y + ((y + mouseY * 0.035) * perspective - v.y) * fusion,
+        scale: 1 + (perspective - 1) * fusion,
+      };
     };
 
     function draw() {
@@ -111,34 +123,50 @@ export default function CinematicIntro() {
       const cy = height * (mobile ? 0.32 : 0.49);
       const size = Math.min(width * (mobile ? 0.35 : 0.235), height * (mobile ? 0.235 : 0.34));
       const still = reduced.matches;
-      const field = still ? 0 : ease(0.015, 0.11, p);
+      const phase = Math.min(p * 7, 5);
+      const imageIndex = Math.floor(phase);
+      const blend = ease(0.22, 0.96, phase - imageIndex);
+      // Each dissolve has a release and a reunion. The brain stays visible beneath it.
+      const fusion = still ? 0 : Math.sin(blend * Math.PI) * 0.78;
       const portalAlpha = ease(0.85, 0.96, p);
+      const imageOpacity = (1 - fusion * 0.42) * (1 - portalAlpha);
+      const current = artworks[imageIndex].naturalWidth ? artworks[imageIndex] : origin;
+      const next = artworks[Math.min(imageIndex + 1, 5)];
+      const mix = next.complete && next.naturalWidth ? blend : 0;
+      const paintArtwork = (image: HTMLImageElement, alpha: number) => {
+        if (!image.complete || !image.naturalWidth || alpha <= 0) return;
+        ctx.globalAlpha = alpha;
+        // 256/43 matches the sampling coordinates exactly, avoiding a floating overlay.
+        const w = size * (256 / 43), h = w * image.height / image.width;
+        ctx.drawImage(image, cx - w / 2, cy - h / 2, w, h);
+      };
       ctx.globalCompositeOperation = "source-over";
-      if (origin.complete && origin.naturalWidth) {
-        ctx.globalAlpha = (1 - field) * (1 - portalAlpha);
-        const w = size * 5.95, h = w * origin.height / origin.width;
-        ctx.drawImage(origin, cx - w / 2, cy - h / 2, w, h);
-      }
+      paintArtwork(current, imageOpacity * (1 - mix));
+      ctx.globalCompositeOperation = "lighter";
+      paintArtwork(next, imageOpacity * mix);
       if (!still && particles.length) {
         ctx.globalCompositeOperation = "lighter";
-        const alpha = field * (1 - portalAlpha);
-        const stretch = ease(0.05, 0.18, p) * (1 - ease(0.70, 0.8, p));
+        const alpha = (0.12 + fusion * 0.88) * (1 - portalAlpha);
+        const stretch = fusion;
         // Fine trails follow the same continuous paths as the artwork's sampled points.
         for (let i = 0; i < particles.length; i += 24) {
           const v = particles[i];
           ctx.beginPath();
           for (let j = 0; j <= 18; j++) {
-            const q = point(v, p, j / 18 * stretch * 0.9);
-            const x = cx + q.x * size, y = cy + q.y * size;
+            const t = j / 18;
+            const q = point(v, p, fusion, t * stretch * 0.9);
+            // The root stays attached to its fold while the luminous tip flows outward.
+            const x = cx + (v.x + (q.x - v.x) * t) * size;
+            const y = cy + (v.y + (q.y - v.y) * t) * size;
             if (j === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
           }
-          ctx.strokeStyle = `rgba(221,175,99,${alpha * 0.32})`;
+          ctx.strokeStyle = `rgba(221,175,99,${alpha * 0.48})`;
           ctx.lineWidth = 0.65;
           ctx.globalAlpha = 1;
           ctx.stroke();
         }
         for (const v of particles) {
-          const q = point(v, p);
+          const q = point(v, p, fusion);
           const radius = Math.max(0.65, size / 230 * q.scale * (0.6 + v.light));
           ctx.globalAlpha = alpha * (0.32 + v.light * 0.58);
           ctx.fillStyle = v.light > 0.8 ? "#fff0cc" : "#c89848";
@@ -179,7 +207,8 @@ export default function CinematicIntro() {
       window.removeEventListener("scroll", schedule);
       surface.removeEventListener("pointermove", pointer);
       reduced.removeEventListener("change", schedule);
-      origin.onload = null; origin.onerror = null; portal.onload = null; particles = [];
+      artworks.forEach(image => { image.onload = null; image.onerror = null; });
+      portal.onload = null; particles = [];
       const web = document.getElementById("toni-web");
       if (web) web.inert = false;
     };
