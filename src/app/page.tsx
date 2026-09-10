@@ -16,6 +16,7 @@ export default function Home() {
   return (
     <main className="relative min-h-screen bg-[#050505] noise-overlay">
       <CinematicIntro />
+      <div id="toni-web" tabIndex={-1} className="relative outline-none">
       <Navbar />
       <Hero />
       <Stats />
@@ -28,6 +29,7 @@ export default function Home() {
       <Contact />
       <Footer />
       <WhatsAppFloat />
+      </div>
     </main>
   );
 }
