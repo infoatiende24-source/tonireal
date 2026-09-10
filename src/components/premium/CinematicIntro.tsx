@@ -31,10 +31,17 @@ export default function CinematicIntro() {
     let width = 1, height = 1, raf = 0, disposed = false;
     let mouseX = 0, mouseY = 0, active = -1;
     let scene: ReturnType<typeof import("@/lib/brain-scene").createBrainScene> | undefined;
-    import("@/lib/brain-scene").then(({ createBrainScene }) => {
+    const controller = new AbortController();
+    Promise.all([
+      import("@/lib/brain-scene"),
+      fetch("/models/brain-cortex.json", { signal: controller.signal }).then(response => {
+        if (!response.ok) throw new Error("Brain model unavailable");
+        return response.json();
+      }),
+    ]).then(([{ createBrainScene }, model]) => {
       if (disposed) return;
       try {
-        scene = createBrainScene(node);
+        scene = createBrainScene(node, model);
         surface.dataset.loaded = "true";
         schedule();
       } catch {
@@ -90,6 +97,7 @@ export default function CinematicIntro() {
       window.removeEventListener("scroll", schedule);
       surface.removeEventListener("pointermove", pointer);
       reduced.removeEventListener("change", schedule);
+      controller.abort();
       scene?.dispose();
       const web = document.getElementById("toni-web");
       if (web) web.inert = false;
