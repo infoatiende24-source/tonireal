@@ -5,15 +5,22 @@ const clamp = (x: number) => Math.max(0, Math.min(1, x));
 const smooth = (a: number, b: number, x: number) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
 const pulse = (a: number, b: number, x: number) => Math.sin(Math.PI * smooth(a, b, x));
 
-// A continuous folded surface shared by the solid hemispheres and their filaments.
+// Smooth gyri separated by winding sulci; the same surface anchors every filament.
+function cortex(nx: number, ny: number, nz: number, side: number) {
+  const u = ny * 15.5 + Math.sin(nz * 6.2 + side * 0.17) * 2.5 + Math.sin(nx * 7.3) * 1.3;
+  const v = nz * 14.8 - Math.sin(ny * 5.8) * 2.2 + nx * 4.2;
+  const ridge = 0.5 + 0.5 * Math.tanh((Math.sin(u) + Math.sin(v) * 0.52) * 2.7);
+  return { ridge, relief: (0.018 + ridge * 0.105 + Math.sin(nz * 34 + ny * 29) * 0.004) * smooth(-0.96, -0.35, nx) };
+}
 function surface(side: number, theta: number, phi: number) {
   const nx = Math.sin(theta) * Math.cos(phi), ny = Math.cos(theta), nz = Math.sin(theta) * Math.sin(phi);
-  const foldA = Math.sin(ny * 18 + Math.sin(nz * 7) * 2.4 + Math.sin(nx * 9));
-  const foldB = Math.sin(nz * 18 - Math.sin(ny * 8) * 2.1 + nx * 5);
-  const fold = Math.pow(Math.abs(foldA * 0.7 + foldB * 0.3), 0.55);
-  const outer = smooth(-0.95, -0.4, nx);
-  const relief = (0.035 + fold * 0.10) * outer;
-  return new THREE.Vector3(side * (0.49 + nx * (0.45 + relief)), ny * (0.90 + relief), nz * (0.78 + relief));
+  const { relief } = cortex(nx, ny, nz, side);
+  const temporal = Math.exp(-((ny + 0.38) ** 2) / 0.12) * Math.max(0, nx) * 0.055;
+  return new THREE.Vector3(
+    side * (0.475 + nx * (0.45 + relief + temporal)),
+    ny * (0.82 + relief) + 0.045 * nz + side * 0.012 * nx,
+    nz * (0.86 + relief) + 0.035 * (1 - ny * ny),
+  );
 }
 
 export function createBrainScene(canvas: HTMLCanvasElement) {
@@ -32,21 +39,27 @@ export function createBrainScene(canvas: HTMLCanvasElement) {
   room.dispose(); pmrem.dispose();
   scene.add(new THREE.HemisphereLight(0xffebce, 0x171009, 1.8));
   const key = new THREE.DirectionalLight(0xffe5af, 4.5); key.position.set(-3, 4, 5); scene.add(key);
-  const rim = new THREE.DirectionalLight(0xffa73c, 3); rim.position.set(3, 1, -3); scene.add(rim);
+  const rim = new THREE.DirectionalLight(0xffbf66, 6); rim.position.set(1, 2, -3); scene.add(rim);
   const fill = new THREE.DirectionalLight(0xffefce, 1.4); fill.position.set(1, -2, 4); scene.add(fill);
   const assembly = new THREE.Group(); scene.add(assembly);
   const brain = new THREE.Group(); assembly.add(brain);
-  const gold = new THREE.MeshStandardMaterial({ color: 0xc38b3c, metalness: 0.72, roughness: 0.34, transparent: true });
+  const gold = new THREE.MeshStandardMaterial({ color: 0xe0ae65, metalness: 0.48, roughness: 0.43, transparent: true, vertexColors: true });
   const geometries: THREE.BufferGeometry[] = [];
 
   for (const side of [-1, 1]) {
     const geometry = new THREE.SphereGeometry(1, 128, 96);
     const position = geometry.attributes.position;
+    const corticalColors = new Float32Array(position.count * 3);
     for (let i = 0; i < position.count; i++) {
       const x = position.getX(i), y = position.getY(i), z = position.getZ(i);
       const v = surface(side, Math.acos(Math.max(-1, Math.min(1, y))), Math.atan2(z, x));
       position.setXYZ(i, v.x, v.y, v.z);
+      const shade = 0.43 + cortex(x, y, z, side).ridge * 0.57;
+      corticalColors[i * 3] = shade;
+      corticalColors[i * 3 + 1] = shade * 0.95;
+      corticalColors[i * 3 + 2] = shade * 0.86;
     }
+    geometry.setAttribute("color", new THREE.BufferAttribute(corticalColors, 3));
     if (side < 0 && geometry.index) {
       for (let i = 0; i < geometry.index.count; i += 3) {
         const a = geometry.index.getX(i);
@@ -100,6 +113,33 @@ export function createBrainScene(canvas: HTMLCanvasElement) {
   sparksGeometry.setAttribute("position", new THREE.BufferAttribute(sparksArray, 3)); geometries.push(sparksGeometry);
   const sparkMaterial = new THREE.PointsMaterial({ color: 0xffdf9c, size: 0.023, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false });
   const sparks = new THREE.Points(sparksGeometry, sparkMaterial); sparks.frustumCulled = false; assembly.add(sparks);
+  // Light is rendered directly with shaders, without image textures or bloom buffers.
+  const glowVertex = `varying vec2 vUv; void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`;
+  const haloMaterial = new THREE.ShaderMaterial({
+    uniforms: { strength: { value: 0.7 } }, vertexShader: glowVertex,
+    fragmentShader: `varying vec2 vUv; uniform float strength;
+      void main(){ vec2 p=(vUv-.5)*2.; float r=length(p);
+      float glow=exp(-r*r*3.8)*.38+exp(-pow((r-.43)/.22,2.))*.25;
+      float edge=1.-smoothstep(.78,1.,r);
+      gl_FragColor=vec4(vec3(1.,.62,.22)*glow*strength,edge); }`,
+    transparent: true, blending: THREE.AdditiveBlending, depthWrite: false,
+  });
+  const haloGeometry = new THREE.PlaneGeometry(5.1, 5.1); geometries.push(haloGeometry);
+  const halo = new THREE.Mesh(haloGeometry, haloMaterial); scene.add(halo);
+  const portal = new THREE.Group(); assembly.add(portal);
+  const ringGeometry = new THREE.TorusGeometry(1.05, 0.021, 12, 160); geometries.push(ringGeometry);
+  const ringMaterial = new THREE.MeshBasicMaterial({ color: 0xffcc62, transparent: true, toneMapped: false });
+  const ring = new THREE.Mesh(ringGeometry, ringMaterial); ring.scale.y = 1.2; portal.add(ring);
+  const ringGlowMaterial = new THREE.ShaderMaterial({
+    uniforms: { strength: { value: 0 } }, vertexShader: glowVertex,
+    fragmentShader: `varying vec2 vUv; uniform float strength;
+      void main(){vec2 p=(vUv-.5)*3.6;float d=abs(length(p)-1.05);
+      float light=exp(-d*d/0.0025)*.9+exp(-d*d/0.035)*.32;
+      gl_FragColor=vec4(vec3(1.,.64,.16)*light*strength,1.);}`,
+    transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false,
+  });
+  const ringGlowGeometry = new THREE.PlaneGeometry(3.6, 4.32); geometries.push(ringGlowGeometry);
+  const ringGlow = new THREE.Mesh(ringGlowGeometry, ringGlowMaterial); ringGlow.position.z = 0.1; portal.add(ringGlow);
   let w = 0, h = 0;
   const temporary = new THREE.Vector3();
 
@@ -116,10 +156,16 @@ export function createBrainScene(canvas: HTMLCanvasElement) {
     assembly.position.set((mobile ? 0 : aspect * 2.1 * 0.36) * (1 - gate), (mobile ? 0.77 : 0.04) * (1 - gate), 0);
     assembly.scale.setScalar(scale * (1 + smooth(0.90, 1, p) * 4));
     assembly.rotation.set((Math.sin(p * 9) * 0.16 + pointerY * 0.10) * (1 - gate), (p * Math.PI * 2 + pointerX * 0.14) * (1 - gate), Math.sin(p * 8) * 0.08 * (1 - gate));
+    halo.position.set(assembly.position.x, assembly.position.y + 0.10, -2);
+    halo.scale.setScalar(scale * (1 + release * 0.17 + gate * 0.5));
+    haloMaterial.uniforms.strength.value = 1.05 + release * 0.65 + gate * 0.6;
+    portal.visible = gate > 0.01;
+    ringMaterial.opacity = gate;
+    ringGlowMaterial.uniforms.strength.value = gate * 1.25;
     gold.opacity = (1 - smooth(0.20, 0.90, release) * 0.96) * (1 - gate);
     gold.depthWrite = gold.opacity > 0.5;
     brain.visible = gold.opacity > 0.01;
-    filamentMaterial.opacity = 0.17 + release * 0.65 + gate * 0.55;
+    filamentMaterial.opacity = 0.10 + release * 0.65 + gate * 0.28;
     sparkMaterial.opacity = 0.4 + release * 0.5;
     let cursor = 0;
     for (let s = 0; s < strands; s++) {
@@ -152,5 +198,5 @@ export function createBrainScene(canvas: HTMLCanvasElement) {
     sparksGeometry.attributes.position.needsUpdate = true;
     renderer.render(scene, camera);
   };
-  return { render, dispose() { geometries.forEach(g => g.dispose()); gold.dispose(); filamentMaterial.dispose(); sparkMaterial.dispose(); environment.dispose(); renderer.dispose(); } };
+  return { render, dispose() { geometries.forEach(g => g.dispose()); gold.dispose(); filamentMaterial.dispose(); sparkMaterial.dispose(); haloMaterial.dispose(); ringMaterial.dispose(); ringGlowMaterial.dispose(); environment.dispose(); renderer.dispose(); } };
 }
