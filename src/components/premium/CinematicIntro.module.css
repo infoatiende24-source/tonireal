@@ -1,7 +1,7 @@
 .journey { position: relative; height: 750svh; z-index: 100; pointer-events: none; margin-bottom: -100svh; }
 .stage { position: sticky; top: 0; height: 100svh; min-height: 440px; overflow: hidden; background: #030506; color: #f6efe3; pointer-events: auto; isolation: isolate; }
 .canvas, .fallback, .shade { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.fallback { background: #030506 url('/intro-v2/frame-1-origin.webp') center / cover no-repeat; }
+.fallback { background: radial-gradient(ellipse at 65% 40%, #21190e 0%, #030506 65%); }
 .stage[data-loaded='true'] .fallback { opacity: 0; }
 .shade { background: linear-gradient(90deg, rgba(3,5,6,.94) 0%, rgba(3,5,6,.56) 29%, transparent 59%), linear-gradient(0deg, rgba(3,5,6,.7), transparent 20%, transparent 80%, rgba(3,5,6,.6)); }
 .top { position: absolute; top: max(28px, env(safe-area-inset-top)); left: 5.2%; right: 5.2%; display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }

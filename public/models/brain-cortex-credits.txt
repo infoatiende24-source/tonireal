@@ -1,0 +1,5 @@
+Cortical mesh: fsaverage5 pial surfaces distributed with Nilearn 0.14.1 (BSD-3-Clause; see NILEARN-LICENSE.txt).
+Source: https://github.com/nilearn/nilearn/tree/main/nilearn/datasets/data/fsaverage5
+Template: FreeSurfer fsaverage (https://surfer.nmr.mgh.harvard.edu/fswiki/FsAverage).
+Adaptations: normalization, coordinate conversion, shading from sulcal depth, sampled filament paths.
+This asset represents cerebral cortex only. It is used as artistic geometry, not for medical interpretation.
