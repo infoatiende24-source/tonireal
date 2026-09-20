@@ -99,7 +99,7 @@ export default function LivingMindIntro() {
     };
     const render = (time: number) => {
       const progress = stageRef.current / (story.length - 1);
-      const shape = smooth((progress + 0.03) / 0.58);
+      // The mind is already legible at the origin; it gains coherence rather than appearing from nowhere.\n      const shape = 0.32 + smooth((progress + 0.03) / 0.58) * 0.68;
       const clarity = smooth((progress - 0.16) / 0.55);
       const portal = smooth((progress - 0.77) / 0.23);
       const scale = Math.min(width, height) * (width < 640 ? 0.87 : 0.94);
@@ -150,7 +150,7 @@ export default function LivingMindIntro() {
       <canvas ref={canvasRef} className="absolute inset-0" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_25%,rgba(0,0,0,.23)_62%,rgba(0,0,0,.87)_100%)]" />
       <div className="pointer-events-none absolute inset-0 overflow-hidden [perspective:1500px]">
-        <div className="absolute left-1/2 top-1/2 h-[84vh] w-[48vw] rounded-[4px] border border-[#e6c583]/[.18] bg-[linear-gradient(115deg,rgba(255,255,255,.10),rgba(207,165,90,.035)_28%,rgba(0,0,0,.12)_68%,rgba(255,255,255,.035))] shadow-[inset_1px_0_0_rgba(255,246,220,.14),0_30px_110px_rgba(0,0,0,.55)] backdrop-blur-[1px] transition-transform duration-700 ease-out sm:h-[105vh] sm:w-[33vw] sm:min-w-[340px] sm:backdrop-blur-[2px]" style={{ transform: leftTransform }} />
+        <div className="absolute left-1/2 top-1/2 h-[72vh] w-[40vw] rounded-[4px] border border-[#e6c583]/[.18] bg-[linear-gradient(115deg,rgba(255,255,255,.10),rgba(207,165,90,.035)_28%,rgba(0,0,0,.12)_68%,rgba(255,255,255,.035))] shadow-[inset_1px_0_0_rgba(255,246,220,.14),0_30px_110px_rgba(0,0,0,.55)] backdrop-blur-[1px] transition-transform duration-700 ease-out sm:h-[105vh] sm:w-[33vw] sm:min-w-[340px] sm:backdrop-blur-[2px]" style={{ transform: leftTransform }} />
         <div className="absolute left-1/2 top-1/2 h-[84vh] w-[48vw] rounded-[4px] border border-[#e6c583]/[.18] bg-[linear-gradient(245deg,rgba(255,255,255,.10),rgba(207,165,90,.035)_28%,rgba(0,0,0,.12)_68%,rgba(255,255,255,.035))] shadow-[inset_-1px_0_0_rgba(255,246,220,.14),0_30px_110px_rgba(0,0,0,.55)] backdrop-blur-[1px] transition-transform duration-700 ease-out sm:h-[105vh] sm:w-[33vw] sm:min-w-[340px] sm:backdrop-blur-[2px]" style={{ transform: rightTransform }} />
       </div>
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[min(68vw,68vh)] w-[min(68vw,68vh)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#e7c17d]/[.12] transition-all duration-700" style={{ opacity: portalStage ? .62 : .18, transform: `translate(-50%,-50%) scale(${portalStage ? 1 : .72})` }} />
